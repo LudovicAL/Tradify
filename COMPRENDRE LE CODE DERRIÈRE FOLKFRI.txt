@@ -1,0 +1,48 @@
+COMPRENDRE LE CODE DERRIÈRE FOLKFRIEND
+=============================================
+
+2 étapes:
+
+	#1: Transcrire la pièce
+		Le fichier wav dure environ 7.5 secondes
+		Il contient deux channel
+		On récupère le signal
+			On lit le fichier, il contient 660168 entiers non signés.
+			Chaque 2 entrées consécutives représentent le même moment dans le temps, sur un channel différent.
+			On convertit les entrées vers le format i16 (avec la méthode try_into_sixteen()). Il en sort 660168 entiers de type i16.
+			On convertit les entrées vers le format f32, puis on les divise par 32768. Il en sort 660168 float de type f32.
+			Ces float semblent aller de -1.0f à 1.0f.
+			On récupère du header du fichier wav le sampling-rate: 44100
+			Cela signifie qu'il y a 44100 point de données pour chaque seconde d'enregistrement (7.5), et pour chaque channel (2).
+			On retourne les 660168 entrées de type f32 et le sampling-rate 44100.
+		On passe le signal au featureExtractor
+			On prépare les windows du featureExtractor. Il y en aura 644, le nombre d'entrées (660168) divisé par la taille des windows (1024).
+			On fait une modified_autocorrelation sur les 1024 données pour en arriver à la fin à 48 entrées
+				Pour chaque window, on multiplie chaque entrée par l'item à l'index correspondant dans le Window_Function.
+				On execute sur les données la méthode fft.process() qui applique une transformation de Fourrier.
+				2 opérations mathématique longues mais faciles sont ensuite appliquées sur les données.
+				On execute encore sur les données la méthode fft.process().
+				On édite ensuite à 0 toutes les valeurs inférieurs à 0.
+				On exécute ensuite une interpolation linéaire.
+				Les résultats de ladite interpolation sont cumulés par petits groupes dans les 48 espaces disponibles.
+				Un étrange algorithme est ensuite appliqué sur les données pour "corriger les octaves".
+				Toutes les données de la windows sont réinitializées à 0, sauf les 5 plus grandes valeurs.
+			Le feature extractor contient donc maintenant 644 windows, chacune remplie de 48 données
+		On transforme le signal en Lattice
+			C'est en utilisant le FeatureDecoder sur le FeatureExtractor, qu'on arrive à produire la Lattice
+				Pour chaque 
+		On transforme la lattice en Contour
+			C'est en utilisant à nouveau le FeatureDecoder, cette fois sur la Lattice, qu'on arrive à produire le Contour
+		On transforme le Contour en String
+			C'est en utilisant à nouveau le FeatureDecoder, cette fois sur le Contour, qu'on arrive à produire la String
+
+	#2: Rechercher la pièce dans la base de données
+		Filtre #1
+			On découpe la transcription en petits morceaux de 4 caractères
+			Pour chaque pièce de la base de données on applique l'algorithme Aho_Corasick en comparant avec la liste des morceaux de 4 caractères. Le nombre de correspondance trouvées par l'algorithme est cumulé pour donner un score à chaque pièce
+			Les pièces sont triées par score
+			Seules les 2000 pièces les mieux scorées sont conservées
+		Filtre #2
+			Pour chaque pièce ayant passé le premier filtre, on applique l'algorithme de Needleman_Wunch (on peut copier la version très simple de FolkFriend) qui retourne un score
+			Les pièces sont triées par score
+				
