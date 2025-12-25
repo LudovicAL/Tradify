@@ -1,3 +1,6 @@
+//////////////////////////////////
+//AUDIO PROCESSING CONSTANTS
+//////////////////////////////////
 const WINDOW_SIZE = 1024;
 const HALF_WINDOW_SIZE = WINDOW_SIZE / 2;
 const MIDI_HIGH = 95; // B6 (1975.5 Hz), just over two octaves above violin open A
@@ -178,3 +181,15 @@ const SCALE_MODIFIERS = [
    ];
 const CIRCLE_OF_FIFTHS = "FCGDAEB";
 const ACCIDENTALS = [1, 3, 6, 8, 10];
+
+//////////////////////////////////
+//TUNE SEARCH CONSTANTS
+//////////////////////////////////
+const QUERY_NGRAM_SIZE_CONTOUR = 4;
+
+//////////////////////////////////
+//OTHER CONSTANTS
+//////////////////////////////////
+const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+const TUNE_INDEX_URL = "https://folkfriend-app-data.web.app/folkfriend-non-user-data.json";
+
