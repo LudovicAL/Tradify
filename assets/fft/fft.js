@@ -1,3 +1,6 @@
+//This code was developped by Nevo Segal
+//https://github.com/nevosegal/fftjs
+
 'use strict';
 
 // real to complex fft

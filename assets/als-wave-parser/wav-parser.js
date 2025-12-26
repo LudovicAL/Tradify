@@ -1,3 +1,6 @@
+//This code is publicly available from NPM:
+//https://www.npmjs.com/package/als-wave-parser
+
 const WaveParser = (function(){
    function parseDataChunk(view, offset, size, bitsPerSample) {
    const int16ToFloat32 = (sample) => sample < 0 ? sample / 32768 : sample / 32767; // normalize 16 bit as in Web Audio API
