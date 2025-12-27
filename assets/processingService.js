@@ -1,13 +1,23 @@
 var interpolationIndices = null;
 
+/*
+This function is the gateway to audio processing.
+It works by:
+1- Applying the Fast Fourier Transform algorithm to the data
+2- Eliminating noise by keeping only frequencies of peek intensity
+3- Eliminating short burst of sound, keeping only longer burst
+*/
 function processAudioSampleArray(audioSampleArray, sampleRate) {
    console.log("Started: Audio processing");
+   //Applying a the Fast Fourier Transform algorithm to the data
    let windowFrameArray = computeWindowFrame(audioSampleArray, sampleRate);
+   //Eliminating noise by keeping only frequencies of peek intensity
    let latticeArray = computeLattice(windowFrameArray);
-   let contourStringArray = computeContour(windowFrameArray, latticeArray, sampleRate);
+   //Eliminating short burst of sound, keeping only longer burst
+   let contourString = computeContour(windowFrameArray, latticeArray, sampleRate);
    console.log("Finished: Audio processing");
-   console.log("Result:", contourStringArray);
-   let contour = contourStringToContour(contourStringArray);
+   console.log("Result:", contourString);
+   let contour = contourStringToContour(contourString);
    let abc = contourToAbc(contour);
    console.log(abc);
 }
@@ -267,7 +277,7 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
    }
    drawArrayOnCanvas("contourCanvas", contourArray, 10);
    console.log("   Finished: Contour computing");
-   return contourStringArray;
+   return contourStringArray.join("");
 }
 
 function latticeIndiceToPich(latticeIndice) {

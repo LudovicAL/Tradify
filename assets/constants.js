@@ -186,6 +186,11 @@ const ACCIDENTALS = [1, 3, 6, 8, 10];
 //TUNE SEARCH CONSTANTS
 //////////////////////////////////
 const QUERY_NGRAM_SIZE_CONTOUR = 4;
+const FIRST_SEARCH_MAX_RESULTS = 2000;
+const SECOND_SEARCH_MAX_RESULTS = 20;
+const MATCH_SCORE = 2;
+const MISMATCH_SCORE = -2;
+const GAP_SCORE = -1;
 
 //////////////////////////////////
 //OTHER CONSTANTS

@@ -1,106 +1,90 @@
-//This code was developped by Bruno Roberto Burigo:
-//https://github.com/BrunoRB/ahocorasick
+//This code was adapted from ComputerBread's work:
+//https://github.com/ComputerBread/algorithms
 
+class Node {
+   constructor() {
+      this.outputs = [];
+      this.children = new Map();
+      this.failureLink = null;
+   }
 
-(function() {
-    'use strict';
+   hasChild(key) {
+      return this.children.has(key);
+   }
 
-    var AhoCorasick = function(keywords) {
-        this._buildTables(keywords);
-    };
+   getChild(key) {
+      return this.children.get(key);
+   }
 
-    AhoCorasick.prototype._buildTables = function(keywords) {
-        var gotoFn = {
-            0: {}
-        };
-        var output = {};
+   setChild(key, node) {
+      this.children.set(key, node);
+   }
 
-        var state = 0;
-        keywords.forEach(function(word) {
-            var curr = 0;
-            for (var i=0; i<word.length; i++) {
-                var l = word[i];
-                if (gotoFn[curr] && l in gotoFn[curr]) {
-                    curr = gotoFn[curr][l];
-                }
-                else {
-                    state++;
-                    gotoFn[curr][l] = state;
-                    gotoFn[state] = {};
-                    curr = state;
-                    output[state] = [];
-                }
+   addOutput(output) {
+      this.outputs.push(output);
+   }
+
+   copyOutputs(node) {
+      for (const o of node.outputs) {
+         this.outputs.push(o);
+      }
+   }
+}
+
+class AhoCorasick {
+   constructor(patterns) {
+      // construct the trie
+      this.root = new Node();
+      let currNode = this.root;
+      for (const pattern of patterns) {
+         for (let i = 0, max = pattern.length; i < max; i++) {
+            const key = pattern[i];
+            if (!currNode.hasChild(key)) {
+               currNode.setChild(key, new Node());
             }
-
-            output[curr].push(word);
-        });
-
-        var failure = {};
-        var xs = [];
-
-        // f(s) = 0 for all states of depth 1 (the ones from which the 0 state can transition to)
-        for (var l in gotoFn[0]) {
-            state = gotoFn[0][l];
-            failure[state] = 0;
-            xs.push(state);
-        }
-
-        while (xs.length) {
-            var r = xs.shift();
-            // for each symbol a such that g(r, a) = s
-            for (var l in gotoFn[r]) {
-                var s = gotoFn[r][l];
-                xs.push(s);
-
-                // set state = f(r)
-                state = failure[r];
-                while(state > 0 && !(l in gotoFn[state])) {
-                    state = failure[state];
-                }
-
-                if (l in gotoFn[state]) {
-                    var fs = gotoFn[state][l];
-                    failure[s] = fs;
-                    output[s] = output[s].concat(output[fs]);
-                }
-                else {
-                    failure[s] = 0;
-                }
+            currNode = currNode.getChild(key);
+         }
+         currNode.addOutput(pattern);
+         currNode = this.root;
+      }
+      // failure link
+      this.root.failureLink = this.root;
+      const queue = [];
+      for (const [_, child] of this.root.children) {
+         child.failureLink = this.root;
+         queue.push(child);
+      }
+      while (queue.length !== 0) {
+         currNode = queue.shift();
+         for (const [key, child] of currNode.children) {
+            queue.push(child);
+            let n = currNode.failureLink;
+            while (!n.hasChild(key) && n != this.root) {
+               n = n.failureLink;
             }
-        }
+            child.failureLink = n.getChild(key) ?? this.root;
+            child.copyOutputs(child.failureLink);
+         }
+      }
+   }
 
-        this.gotoFn = gotoFn;
-        this.output = output;
-        this.failure = failure;
-    };
-
-    AhoCorasick.prototype.search = function(string) {
-        var state = 0;
-        var results = [];
-        for (var i=0; i<string.length; i++) {
-            var l = string[i];
-            while (state > 0 && !(l in this.gotoFn[state])) {
-                state = this.failure[state];
-            }
-            if (!(l in this.gotoFn[state])) {
-                continue;
-            }
-
-            state = this.gotoFn[state][l];
-
-            if (this.output[state].length) {
-                var foundStrs = this.output[state];
-                results.push([i, foundStrs]);
-            }
-        }
-
-        return results;
-    };
-
-    if (typeof module !== 'undefined') {
-        module.exports = AhoCorasick;
-    }
-    else {
-        window.AhoCorasick = AhoCorasick;
-    }
-})();
+   search(text) {
+      let score = 0;
+      let state = this.root;
+      let i = 0;
+      let max = text.length;
+      while (i < max) {
+         const c = text[i];
+         if (state.hasChild(c)) {
+            state = state.getChild(c);
+            i++;
+            score += state.outputs.length;
+         } else if (state === this.root) {
+            i++;
+         } else {
+            state = state.failureLink;
+         }
+      }
+      return score;
+   }
+}
