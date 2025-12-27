@@ -62,19 +62,19 @@ function performFirstSearch(contourString) {
       nGramArray.push(contourString.substring(i, i + QUERY_NGRAM_SIZE_CONTOUR));
    }
    //Execute the Aho-Corasick algorithm
-   let rankedSettings = [];
+   let rankedTuneArray = [];
    let ac = new AhoCorasick(nGramArray);
-   Object.values(tuneIndex.settings).forEach(setting => {
-      let score = ac.search(setting.contour);
+   Object.values(tuneIndex).forEach(tune => {
+      let score = ac.search(tune.contour);
       if (score > 0) {
-         rankedSettings.push({ tune_id: setting.tune_id, score: score });
+         rankedSettings.push({ tune_id: tune.tune_id, score: score });
       }
    });
    //Sort and truncate the results
-   rankedSettings.sort((a, b) => b.score - a.score);
-   let slicedRankedSettings = rankedSettings.slice(0, FIRST_SEARCH_MAX_RESULTS);
+   rankedTuneArray.sort((a, b) => b.score - a.score);
+   let slicedTuneArray = rankedTuneArray.slice(0, FIRST_SEARCH_MAX_RESULTS);
    console.log("   Finished: First search");
-   return slicedRankedSettings;
+   return slicedTuneArray;
 }
 
 /*
@@ -83,20 +83,20 @@ The algorithm it uses is called Needleman-Wunsch.
 */
 function performSecondSearch(contourString, firstSearchResult) {
    console.log("   Started: Second search");
-   let rankedSettings = [];
+   let rankedTuneArray = [];
    let contourStringLength = contourString.length;
    for (const searchResult of firstSearchResult) {
       //Apply the Needleman-Wunsch algorithm
       let a = null;
       let b = null;
       //Swap a and b such that b is always longer than a
-      let searchResultSetting = tuneIndex.settings[parseInt(searchResult.tune_id)]
-      if (contourStringLength > searchResultSetting.contour.length) {
+      let searchResultTune = tuneIndex.[searchResult.tune_id]
+      if (contourStringLength > searchResultTune.contour.length) {
          b = contourString;
-         a = searchResultSetting.contour;
+         a = searchResultTune.contour;
       } else {
          a = contourString;
-         b = searchResultSetting.contour;
+         b = searchResultTune.contour;
       }
       //Build a matrix organized as follow:
       //       a1 a2 a3 .. aN
@@ -124,11 +124,11 @@ function performSecondSearch(contourString, firstSearchResult) {
       }
       let highscore = Math.max(...lastRow);
       let normalConstant = a.length;
-      rankedSettings.push({ tune_id: searchResult.tune_id, score: result = 0.5 * highscore / normalConstant });
+      rankedTuneArray.push({ tune_id: searchResult.tune_id, score: result = 0.5 * highscore / normalConstant });
    }
    //Sort and truncate the results
-   rankedSettings.sort((a, b) => b.score - a.score);
-   let slicedRankedSettings = rankedSettings.slice(0, SECOND_SEARCH_MAX_RESULTS);
+   rankedTuneArray.sort((a, b) => b.score - a.score);
+   let slicedTuneArray = rankedTuneArray.slice(0, SECOND_SEARCH_MAX_RESULTS);
    console.log("   Finished: Second search");
-   return slicedRankedSettings;
+   return slicedTuneArray;
 }
