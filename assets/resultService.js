@@ -24,7 +24,7 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
       for (let i = 0, max = searchResult.rankedTunes.length; i < max; i++) {
          const bRow = document.createElement('tr');
          const bCellRank = document.createElement('td');
-         bCellRank.textContent = i;
+         bCellRank.textContent = i + 1;
          bRow.appendChild(bCellRank);
          const bCellTuneName = document.createElement('td');
          bCellTuneName.textContent = tuneIndex[searchResult.rankedTunes[i].tune_id].file_name;

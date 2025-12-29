@@ -1,4 +1,5 @@
 var startRecordingButton = document.getElementById("startRecordingButton");
+var startRecordingImage = document.getElementById("startRecordingImage");
 var currentStatus = Status.IDLE;
 var recordingNumber = 0;
 
@@ -12,9 +13,11 @@ function onStartRecordingButtonClick() {
 
 async function jitterButton() {
    if (currentStatus === Status.RECORDING) {
+      startRecordingImage.src = "icons/Recording1.svg";
       startRecordingButton.style.transform = `scale(${0.9 + 0.05 * Math.random()})`;
       window.requestAnimationFrame(jitterButton);
    } else {
+      startRecordingImage.src = "icons/Idle1.svg";
       startRecordingButton.style.transform = `scale(1)`;
    }
 }
