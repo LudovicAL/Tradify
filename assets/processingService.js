@@ -20,6 +20,7 @@ function processAudioSampleArray(audioSampleArray, sampleRate) {
    let contour = contourStringToContour(contourString);
    let abc = contourToAbc(contour);
    console.log(abc);
+   startSearching(contourString);
 }
 
 function computeWindowFrame(audioSampleArray, sampleRate) {
