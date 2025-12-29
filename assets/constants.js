@@ -196,5 +196,5 @@ const GAP_SCORE = -1;
 //OTHER CONSTANTS
 //////////////////////////////////
 const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-const TUNE_INDEX_URL = "https://raw.githubusercontent.com/LudovicAL/Tradify/refs/heads/main/tradify-tune-index.json";
+const TUNE_INDEX_URL = "https://raw.githubusercontent.com/LudovicAL/Tradify/refs/heads/main/tuneIndex.json";
 

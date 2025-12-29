@@ -42,7 +42,7 @@ function startSearching(contourString) {
    let firstSearchResult = performFirstSearch(contourString);
    let secondSearchResult = performSecondSearch(contourString, firstSearchResult);
    console.log("Finished: Tune index searching");
-   console.log("Result: " + secondSearchResult[0]);
+   console.log("Best result: " + secondSearchResult[0].tune_id + " (tune id)");
 }
 
 /*
@@ -67,7 +67,7 @@ function performFirstSearch(contourString) {
    Object.values(tuneIndex).forEach(tune => {
       let score = ac.search(tune.contour);
       if (score > 0) {
-         rankedSettings.push({ tune_id: tune.tune_id, score: score });
+         rankedTuneArray.push({ tune_id: tune.tune_id, score: score });
       }
    });
    //Sort and truncate the results
@@ -90,13 +90,13 @@ function performSecondSearch(contourString, firstSearchResult) {
       let a = null;
       let b = null;
       //Swap a and b such that b is always longer than a
-      let searchResultTune = tuneIndex.[searchResult.tune_id]
-      if (contourStringLength > searchResultTune.contour.length) {
+      let tuneIndexTune = tuneIndex[searchResult.tune_id]
+      if (contourStringLength > tuneIndexTune.contour.length) {
          b = contourString;
-         a = searchResultTune.contour;
+         a = tuneIndexTune.contour;
       } else {
          a = contourString;
-         b = searchResultTune.contour;
+         b = tuneIndexTune.contour;
       }
       //Build a matrix organized as follow:
       //       a1 a2 a3 .. aN
@@ -123,8 +123,7 @@ function performSecondSearch(contourString, firstSearchResult) {
          }
       }
       let highscore = Math.max(...lastRow);
-      let normalConstant = a.length;
-      rankedTuneArray.push({ tune_id: searchResult.tune_id, score: result = 0.5 * highscore / normalConstant });
+      rankedTuneArray.push({ tune_id: searchResult.tune_id, score: result = 0.5 * highscore / lastColumnIndex });
    }
    //Sort and truncate the results
    rankedTuneArray.sort((a, b) => b.score - a.score);
