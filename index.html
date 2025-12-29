@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
 
 <head>
-   <title>Identificateur de musique trad</title>
+   <title>Tradify</title>
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="icon" type="image/png" href="icons/favicon.ico">
@@ -16,10 +16,10 @@
    </script>
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
    <noscript>This page requires Javascript enabled in your browser to work.</noscript>
    <div class="container m-5">
-      <h1>Identificateur de musique trad québécoises et irlandaises</h1>
+      <h1>Tradify</h1>
       <div class="container ml-5">
          <button type="button" class="btn btn-info" data-bs-toggle="collapse" data-bs-target="#aboutCollapsed">À propos</button>
          <div id="aboutCollapsed" class="collapse mt-3 p-4 bg-light rounded">
@@ -111,7 +111,7 @@
                <img src="icons/Idle1.svg" alt="Record" class="img-fluid" style="height:300px" id="startRecordingImage">
             </button>
          </div>
-         <div class="mx-auto d-block">
+         <div class="mx-auto d-block my-2">
             <table class="table table-bordered" id="resultTable"></table>
          </div>
          <div class="collapse" id="debugDiv">
@@ -134,7 +134,11 @@
          </div>
       </div>
    </div>
-   <button type="button" class="btn btn-info btn-lg fixed-bottom d-none" id="topButton">Top</button>
+   <footer class="footer mt-auto py-3 bg-light">
+      <div class="container">
+         <small class="text-muted">Adapted from the work of Tom Wyllie (<a href="https://folkfriend.app/" target="_blank">FolkFriend</a>) by Ludovic A.-Lussier.</small>
+      </div>
+   </footer>
    <script type="text/javascript" src="assets/aho-corasick/aho-corasick.js"></script>
    <script type="text/javascript" src="assets/als-wave-parser/wav-parser.js"></script>
    <script type="text/javascript" src="assets/fft/utils.js"></script>
