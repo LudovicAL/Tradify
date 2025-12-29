@@ -7,20 +7,22 @@ It works by:
 2- Eliminating noise by keeping only frequencies of peek intensity
 3- Eliminating short burst of sound, keeping only longer burst
 */
-function processAudioSampleArray(audioSampleArray, sampleRate) {
+function startProcessing(onFinishedProcessing, recordingResult) {
    console.log("Started: Audio processing");
    //Applying a the Fast Fourier Transform algorithm to the data
-   let windowFrameArray = computeWindowFrame(audioSampleArray, sampleRate);
+   let windowFrameArray = computeWindowFrame(recordingResult.audioSampleArray, recordingResult.sampleRate);
    //Eliminating noise by keeping only frequencies of peek intensity
    let latticeArray = computeLattice(windowFrameArray);
    //Eliminating short burst of sound, keeping only longer burst
-   let contourString = computeContour(windowFrameArray, latticeArray, sampleRate);
+   let contourString = computeContour(windowFrameArray, latticeArray, recordingResult.sampleRate);
+   console.log("   ContourString:\n", contourString);
+   if (DEBUG_MODE) {
+      let contour = contourStringToContour(contourString);
+      let abc = contourToAbc(contour);
+      console.log("   Abc:\n" + abc);
+   }
    console.log("Finished: Audio processing");
-   console.log("Result:", contourString);
-   let contour = contourStringToContour(contourString);
-   let abc = contourToAbc(contour);
-   console.log(abc);
-   startSearching(contourString);
+   onFinishedProcessing({ contourString: contourString, recordingNumber: recordingResult.recordingNumber });
 }
 
 function computeWindowFrame(audioSampleArray, sampleRate) {
@@ -29,7 +31,9 @@ function computeWindowFrame(audioSampleArray, sampleRate) {
    for (let i = 0, max = audioSampleArray.length; i < max; i++) {
       windowFrameArray[i] = processAudioSample(audioSampleArray[i], sampleRate);
    }
-   drawArrayOfArraysOnCanvas("signalCanvas", windowFrameArray, windowFrameArray.length, MIDI_NUM);
+   if (DEBUG_MODE) {
+      drawArrayOfArraysOnCanvas("signalCanvas", windowFrameArray, windowFrameArray.length, MIDI_NUM);
+   }
    console.log("   Finished: Window frame computing");
    return windowFrameArray;
 }
@@ -190,7 +194,9 @@ function computeLattice(windowFrameArray) {
       let maxScore = Math.max(...latticeScoreArray[i]);
       latticePathBacktraceArray[i] = latticeScoreArray[i].indexOf(maxScore);
    }
-   drawArrayOnCanvas("latticeCanvas", latticePathBacktraceArray, 2);
+   if (DEBUG_MODE) {
+      drawArrayOnCanvas("latticeCanvas", latticePathBacktraceArray, 2);
+   }
    console.log("   Finished: Lattice computing");
    return latticePathBacktraceArray;
 }
@@ -276,9 +282,12 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
    for (let i = 0, max = contourArray.length; i < max; i++) {
       contourStringArray[i] = CONTOUR_TO_QUERY_CHAR[(contourArray[i] - MIDI_LOW)];
    }
-   drawArrayOnCanvas("contourCanvas", contourArray, 10);
+   if (DEBUG_MODE) {
+      drawArrayOnCanvas("contourCanvas", contourArray, 10);
+   }
+   let contourString = contourStringArray.join("");
    console.log("   Finished: Contour computing");
-   return contourStringArray.join("");
+   return contourString;
 }
 
 function latticeIndiceToPich(latticeIndice) {

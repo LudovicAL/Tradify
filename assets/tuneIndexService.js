@@ -37,12 +37,15 @@ window.onload = async () => {
 This function is the gateway to tune searching.
 Provided with a contour string, it returns the best corresponding matches from the database.
 */
-function startSearching(contourString) {
+function startSearching(onFinishedSearching, processingResult) {
    console.log("Started: Tune index searching");
-   let firstSearchResult = performFirstSearch(contourString);
-   let secondSearchResult = performSecondSearch(contourString, firstSearchResult);
+   let secondSearchResult = [];
+   if (processingResult.contourString.length > 0) {
+      let firstSearchResult = performFirstSearch(processingResult.contourString);
+      secondSearchResult = performSecondSearch(processingResult.contourString, firstSearchResult);
+   }
    console.log("Finished: Tune index searching");
-   console.log("Best result: " + secondSearchResult[0].tune_id + " (tune id)");
+   onFinishedSearching({ rankedTunes: secondSearchResult, recordingNumber: processingResult.recordingNumber });
 }
 
 /*

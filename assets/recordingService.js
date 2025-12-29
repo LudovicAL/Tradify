@@ -5,6 +5,7 @@ var micSource = null;
 var sampleRate = null;
 var audioSampleArray = null;
 
+/*
 async function startImporting() {
    console.log("Started: Start Importing");
    audioSampleArray = [];
@@ -26,48 +27,40 @@ async function startImporting() {
    processAudioSampleArray(audioSampleArray, waveParser.sampleRate);
    console.log("Finished: Start Importing");
 }
+*/
 
-async function startRecording() {
+async function startRecording(onFinishedRecording, recordingNumber) {
    console.log("Started: Start Recording");
+   audioSampleArray = [];
    if (!navigator || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      stopRecording();
       alert('Missing support for navigator.mediaDevices.getUserMedia');
-      throw 'Missing support for navigator.mediaDevices.getUserMedia';
+      console.log('Missing support for navigator.mediaDevices.getUserMedia');
+      return recordingNumber;
    }
-   
    try {
       micStream = await navigator.mediaDevices.getUserMedia(USER_MEDIA_CONSTRAINTS);
    } catch (e) {
-      stopRecording();
       alert('Error while initializing micStream.');
-      throw 'Error while initializing micStream.';
+      console.log('Error while initializing micStream.');
+      return recordingNumber;
    }
-   
-   audioSampleArray = [];
-   
    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-   
    micProcessor = audioContext.createScriptProcessor(WINDOW_SIZE, 1, 1);
    micProcessor.onaudioprocess = function(audioProcessingEvent) {
       audioSampleArray.push(audioProcessingEvent.inputBuffer.getChannelData(0).slice());
    };
-   
    micSource = audioContext.createMediaStreamSource(micStream);
    micSource.connect(micProcessor);
    micProcessor.connect(audioContext.destination);
-   
+   setTimeout(() => {
+      onFinishedRecording(recordingNumber);
+   }, RECORDING_TIME_LIMIT_MS);
+   clearTable();
+   jitterButton();
    console.log("Finished: Start recording");
-   try {
-      sampleRate = audioContext.sampleRate;
-      console.log(`Using microphone sample rate ${sampleRate}`);
-   } catch (e) {
-      stopRecording();
-      alert('Could not retrieve sample rate.');
-      throw 'Could not retrieve sample rate.';
-   }
 }
 
-async function stopRecording() {
+async function stopRecording(recordingNumber) {
    console.log("Started: Stop recording");
    let sampleRate = audioContext.sampleRate;
    if (micProcessor) {
@@ -83,10 +76,5 @@ async function stopRecording() {
       audioContext = null;
    }
    console.log("Finished: Stop recording");
-   if (audioSampleArray.length > 10) {
-      processAudioSampleArray(audioSampleArray, sampleRate);
-   } else {
-      alert('Not enough audio was recorded. Record longer.');
-      throw 'Not enough audio was recorded. Record longer.';
-   }
+   return { audioSampleArray: audioSampleArray, sampleRate: sampleRate, recordingNumber: recordingNumber };
 }

@@ -186,8 +186,8 @@ const ACCIDENTALS = [1, 3, 6, 8, 10];
 //TUNE SEARCH CONSTANTS
 //////////////////////////////////
 const QUERY_NGRAM_SIZE_CONTOUR = 4;
-const FIRST_SEARCH_MAX_RESULTS = 2000;
-const SECOND_SEARCH_MAX_RESULTS = 20;
+const FIRST_SEARCH_MAX_RESULTS = 300;
+const SECOND_SEARCH_MAX_RESULTS = 10;
 const MATCH_SCORE = 2;
 const MISMATCH_SCORE = -2;
 const GAP_SCORE = -1;
@@ -197,4 +197,12 @@ const GAP_SCORE = -1;
 //////////////////////////////////
 const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
 const TUNE_INDEX_URL = "https://raw.githubusercontent.com/LudovicAL/Tradify/refs/heads/main/tuneIndex.json";
-
+const RECORDING_TIME_LIMIT_MS = 7500;
+const Status = Object.freeze({
+  IDLE: "IDLE",
+  RECORDING: "RECORDING",
+  PROCESSING: "PROCESSING",
+  SEARCHING: "SEARCHING",
+  DISPLAYING: "DISPLAYING"
+});
+const DEBUG_MODE = false;
