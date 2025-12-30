@@ -10,20 +10,23 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
    if (searchResult.rankedTunes.length > 0) {
       console.log("   Best result: " + tuneIndex[searchResult.rankedTunes[0].tune_id].file_name);
       const tHead = document.createElement('thead');
-      tHead.classList.add('table-primary');
+      tHead.classList.add('table-dark');
       tHead.classList.add('fw-bold');
       const hRow = document.createElement('tr');
       //Header rank column
       const hCellRank = document.createElement('td');
-      hCellRank.textContent = "Rank";
+      hCellRank.textContent = "Rang";
+      hCellRank.classList.add('text-center');
       hRow.appendChild(hCellRank);
       //Header name column
       const hCellTuneName = document.createElement('td');
-      hCellTuneName.textContent = "Tune name";
+      hCellTuneName.textContent = "Titre";
+      hCellTuneName.classList.add('text-center');
       hRow.appendChild(hCellTuneName);
       //Header score column
       const hCellScore = document.createElement('td');
       hCellScore.textContent = "Score";
+      hCellScore.classList.add('text-center');
       hRow.appendChild(hCellScore);
       tHead.appendChild(hRow);
       resultTable.appendChild(tHead);
@@ -47,7 +50,24 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
          bRow.appendChild(bCellTuneName);
          //Tune score column
          const bCellScore = document.createElement('td');
-         bCellScore.textContent = (searchResult.rankedTunes[i].score * 100).toFixed(1) + "%";
+         let score = searchResult.rankedTunes[i].score;
+         //Score > 0.65 = Very close ; > 0.5 = Close ; > 0.2 = Possible ; Unlikely
+         switch (true) {
+            case (score >= 0.65):
+               bCellScore.classList.add('table-success');
+               break;
+            case (score >= 0.50):
+               bCellScore.classList.add('table-info');
+               break;
+            case (score >= 0.20):
+               bCellScore.classList.add('table-warning');
+               break;
+            default:
+               bCellScore.classList.add('table-danger');
+               break;
+         }
+         bCellScore.textContent = (score * 100).toFixed(1) + "%";
+         bCellScore.classList.add('text-end');
          bRow.appendChild(bCellScore);
          tBody.appendChild(bRow);
       };
@@ -55,7 +75,8 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
   } else {
       console.log("   Best result: 0 result to display");
       const cell = document.createElement('td');
-      cell.textContent = "0 result.\nTry again!";
+      cell.textContent = "0 résultat.\nEssayez encore!";
+      cell.classList.add('fw-bolder');
       const row = document.createElement('tr');
       row.appendChild(cell);
       resultTable.appendChild(row);
