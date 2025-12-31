@@ -64,7 +64,7 @@ async function fetchJsonFile(url, storeName, storeLifeSpanInDays) {
       } else {
          console.log("   Found cached file named " + storeName);
          let fileCacheDate = await window.idbKV.get(storeName + "Date");
-         if (fileCacheDate === 'undefined' || ((Date.now() - fileCacheDate) >= (storeLifeSpanInDays * MILLISECONDS_PER_DAY))) {
+         if (typeof fileCacheDate === 'undefined' || ((Date.now() - fileCacheDate) >= (storeLifeSpanInDays * MILLISECONDS_PER_DAY))) {
             console.log("   Cached " + storeName + " date is undefined or too old. The file will be renewed.");
             jsonFile = await fetch(url).then((response) => response.json());
             await window.idbKV.set(storeName, jsonFile);
