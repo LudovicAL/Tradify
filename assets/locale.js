@@ -63,12 +63,12 @@ function translatePage() {
 // corresponding to the element's data-i18n-key
 function translateElement(element) {
    const key = element.getAttribute("data-i18n-key");
-   const translation = translations?.[key];
+   const translationValue = translations?.[key];
    if (typeof translationValue === 'undefined') {
       console.log("   Translation could not be found for: " + key);
       return;
    } else {
-      element.innerText = translation;
+      element.innerText = translationValue;
    }
 }
 
