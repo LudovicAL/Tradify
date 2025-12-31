@@ -1,13 +1,10 @@
 //This code was adapted from Mohammad Ashour's work:
 //https://phrase.com/blog/posts/step-step-guide-javascript-localization/
 
-// The locale our app first shows
-const defaultLocale = "fr";
-const supportedLocales = ["fr", "en"];
 // The active locale
-let locale;
+var locale;
 // Gets filled with active locale translations
-let translations = {};
+var translations = {};
 
 // Load translations for the given locale and translate
 // the page to this locale
@@ -21,14 +18,24 @@ async function setLocale(newLocale) {
    translatePage();
 }
 
+function getTranslation(key, defaultValue) {
+   let translationValue = translations?.[key];
+   if (typeof translationValue === 'undefined') {
+      console.log("   Translation could not be found for: " + key);
+      return defaultValue;
+   } else {
+      return translationValue;
+   }
+}
+
 function isSupported(locale) {
-   return supportedLocales.indexOf(locale) > -1;
+   return SUPPORTED_LOCALES.indexOf(locale) > -1;
 }
 
 // Retrieve the first locale we support from the given
 // array, or return our default locale
 function supportedOrDefault(locales) {
-   return locales.find(isSupported) || defaultLocale;
+   return locales.find(isSupported) || DEFAULT_LOCALE;
 }
 
 function browserLocales(languageCodeOnly = false) {
@@ -56,8 +63,13 @@ function translatePage() {
 // corresponding to the element's data-i18n-key
 function translateElement(element) {
    const key = element.getAttribute("data-i18n-key");
-   const translation = translations[key];
-   element.innerText = translation;
+   const translation = translations?.[key];
+   if (typeof translationValue === 'undefined') {
+      console.log("   Translation could not be found for: " + key);
+      return;
+   } else {
+      element.innerText = translation;
+   }
 }
 
 // Whenever the user selects a new locale, we

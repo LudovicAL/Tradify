@@ -3,8 +3,8 @@ var localeLoaded = false;
 document.addEventListener("DOMContentLoaded", async () => {
    console.log("Started: Locale retrieval");
    const initialLocale = supportedOrDefault(browserLocales(true));
-   await setLocale(defaultLocale);
-   bindLocaleSwitcher(defaultLocale);
+   await setLocale(DEFAULT_LOCALE);
+   bindLocaleSwitcher(DEFAULT_LOCALE);
    localeLoaded = true;
    console.log("Finished: Locale retrieval");
 });

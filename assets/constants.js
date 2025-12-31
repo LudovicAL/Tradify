@@ -206,3 +206,5 @@ const Status = Object.freeze({
   DISPLAYING: "DISPLAYING"
 });
 const DEBUG_MODE = false;
+const DEFAULT_LOCALE = "fr";
+const SUPPORTED_LOCALES = ["fr", "en"];

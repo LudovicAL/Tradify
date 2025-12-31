@@ -28,8 +28,9 @@ function onFinishedRecording(currentRecordingNumber) {
       stopRecording(currentRecordingNumber).then(result => {
          if (currentStatus === Status.PROCESSING && result.recordingNumber === recordingNumber) {
             if (result.audioSampleArray.length < 10) {
-               alert('Not enough data to process.');
-               console.log('Not enough data to process.');
+               let errorMessage = getTranslation("insufficentDataForAnalysis", "Les données enregistrées sont insuffisantes pour poursuivre avec l'analyse.");
+               alert(errorMessage);
+               console.log(errorMessage);
                currentStatus = Status.DISPLAYING;
                startDisplaying(onFinishedDisplaying, { rankedTunes: [] });
             } else {
@@ -43,8 +44,9 @@ function onFinishedRecording(currentRecordingNumber) {
 function onFinishedProcessing(processingResult) {
    if (currentStatus === Status.PROCESSING && processingResult.recordingNumber === recordingNumber) {
       if (processingResult.contourString.length < 5) {
-         alert('Not enough data to perform a search.');
-         console.log('Not enough data to perform a search.');
+         let errorMessage = getTranslation("insufficentDataForSearch", "Les données enregistrées sont insuffisantes pour poursuivre avec la recherche.");
+         alert(errorMessage);
+         console.log(errorMessage);
          currentStatus = Status.DISPLAYING;
          startDisplaying(onFinishedDisplaying, { rankedTunes: [] });
       } else {

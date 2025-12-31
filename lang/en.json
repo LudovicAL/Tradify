@@ -28,5 +28,11 @@
    "tunearchDescription": "A repository of sheet music for traditional music.",
    "folktunefinderTitle": "Folk Tune Finder",
    "folktunefinderDescription": "A repository of sheet music for traditional music.",
-   "footer": "Adapted from the work of Tom Wyllie (FolkFriend) by Ludovic A.-Lussier."
+   "footer": "Adapted from the work of Tom Wyllie (FolkFriend) by Ludovic A.-Lussier.",
+   "Rank": "Rank",
+   "Title": "Title",
+   "Score": "Score",
+   "insufficentDataForAnalysis": "The recorded data is insufficent to proceed further with analysis.",
+   "insufficentDataForSearch": "The recorded data is insufficent to proceed further with the search.",
+   "zeroResult": "0 result. Try again!"
 }

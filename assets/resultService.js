@@ -15,17 +15,17 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
       const hRow = document.createElement('tr');
       //Header rank column
       const hCellRank = document.createElement('td');
-      hCellRank.textContent = "Rang";
+      hCellRank.textContent = getTranslation("Rank", "Rang");
       hCellRank.classList.add('text-center');
       hRow.appendChild(hCellRank);
       //Header name column
       const hCellTuneName = document.createElement('td');
-      hCellTuneName.textContent = "Titre";
+      hCellTuneName.textContent = getTranslation("Title", "Titre");
       hCellTuneName.classList.add('text-center');
       hRow.appendChild(hCellTuneName);
       //Header score column
       const hCellScore = document.createElement('td');
-      hCellScore.textContent = "Score";
+      hCellScore.textContent = getTranslation("Score", "Score");
       hCellScore.classList.add('text-center');
       hRow.appendChild(hCellScore);
       tHead.appendChild(hRow);
@@ -75,7 +75,7 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
   } else {
       console.log("   Best result: 0 result to display");
       const cell = document.createElement('td');
-      cell.textContent = "0 résultat.\nEssayez encore!";
+      cell.textContent = getTranslation("zeroResult", "0 résultat. Essayez de nouveau!");
       cell.classList.add('fw-bolder');
       const row = document.createElement('tr');
       row.appendChild(cell);

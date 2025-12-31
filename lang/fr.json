@@ -28,5 +28,11 @@
    "tunearchDescription": "Un dépôt de partitions pour la musique traditionnelle.",
    "folktunefinderTitle": "Folk Tune Finder",
    "folktunefinderDescription": "Un dépôt de partitions pour la musique traditionnelle.",
-   "footer": "Adapté du travail de Tom Wyllie (FolkFriend) par Ludovic A.-Lussier."
+   "footer": "Adapté du travail de Tom Wyllie (FolkFriend) par Ludovic A.-Lussier.",
+   "Rank": "Rang",
+   "Title": "Titre",
+   "Score": "Score",
+   "insufficentDataForAnalysis": "Les données enregistrées sont insuffisantes pour poursuivre avec l'analyse.",
+   "insufficentDataForSearch": "Les données enregistrées sont insuffisantes pour poursuivre avec la recherche.",
+   "zeroResult": "0 résultat. Essayez de nouveau!"
 }
