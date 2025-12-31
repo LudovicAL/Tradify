@@ -101,5 +101,5 @@ function onStopRecordingButtonClick() {
 startRecordingButton.addEventListener("click", onStartRecordingButtonClick);
 
 if (DEBUG_MODE) {
-   document.getElementById("debugDiv").classList.remove('collapse');;
+   document.getElementById("debugDiv").classList.remove("collapse");;
 }

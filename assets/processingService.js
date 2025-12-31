@@ -46,7 +46,7 @@ function processAudioSample(audioSample, sampleRate) {
    }
    
    //Apply Fast Fourier Transform (FFT)
-   let fftSignal = {'real': new Array(WINDOW_SIZE)};
+   let fftSignal = {"real": new Array(WINDOW_SIZE)};
    for (let i = 0; i < WINDOW_SIZE; i++) {
       fftSignal.real[i] = audioSample[i]; //Using this library: https://www.jsdelivr.com/package/npm/fftjs
    }

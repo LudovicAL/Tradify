@@ -15,11 +15,11 @@ function drawArrayOfArraysOnCanvas(canvasName, arrayOfArrays, width, height) {
    let heightMagnification = 2;
    //Prepare the canvas
    let canvasElement = document.getElementById(canvasName);
-   const canvasContext = canvasElement.getContext('2d');
+   const canvasContext = canvasElement.getContext("2d");
    canvasElement.width = (width * widthMagnification) + 1;
    canvasElement.height = (height * heightMagnification) + 1;
    //Clear the canvas
-   canvasContext.fillStyle = 'rgb(255, 255, 255)';
+   canvasContext.fillStyle = "rgb(255, 255, 255)";
    canvasContext.fillRect(0, 0, canvasElement.width, canvasElement.height);
    //Draw on the canvas
    for (let i = 0; i < width; i++) {
@@ -37,13 +37,13 @@ function drawArrayOnCanvas(canvasName, dataArray, widthMagnification) {
    //Prepare the canvas
    let maxValue = Math.max(...dataArray);
    let canvasElement = document.getElementById(canvasName);
-   const canvasContext = canvasElement.getContext('2d');
+   const canvasContext = canvasElement.getContext("2d");
    let width = dataArray.length * widthMagnification + 1;
    let height = maxValue * heightMagnification + 1;
    canvasElement.width = width;
    canvasElement.height = height;
    //Clear the canvas
-   canvasContext.fillStyle = 'rgb(255, 255, 255)';
+   canvasContext.fillStyle = "rgb(255, 255, 255)";
    canvasContext.fillRect(0, 0, width, height);
    //Draw on the canvas
    canvasContext.fillStyle = "rgb(0, 0, 0)";
@@ -55,7 +55,7 @@ function drawArrayOnCanvas(canvasName, dataArray, widthMagnification) {
 async function fetchJsonFile(url, storeName, storeLifeSpanInDays) {
    jsonFile = await window.idbKV.get(storeName);
    if (navigator.onLine) {
-      console.log('   Navigator online');
+      console.log("   Navigator online");
       if (typeof jsonFile === 'undefined') {
          console.log("   No file named " + storeName + " was cached, requesting download");
          jsonFile = await fetch(url).then((response) => response.json());
@@ -74,7 +74,7 @@ async function fetchJsonFile(url, storeName, storeLifeSpanInDays) {
          }
       }
    } else {
-      console.log('   Navigator offline. No action to take.');
+      console.log("   Navigator offline. No action to take.");
    }
    return jsonFile;
 }

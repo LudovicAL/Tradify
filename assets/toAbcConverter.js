@@ -152,7 +152,7 @@ function getAbcVocabulary(key) {
 function getMajorKeySignature(key) {
    let baseKeySignature = new Map();
    // Initialise key signature as F major
-   baseKeySignature.set('B', -1);
+   baseKeySignature.set("B", -1);
    let numStepsFromF = CIRCLE_OF_FIFTHS.indexOf(key.Letter);
    let modifierPtr = 6;
    for (let i = 0; i < numStepsFromF; i++) {

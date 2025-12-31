@@ -28,16 +28,16 @@ const USER_MEDIA_CONSTRAINTS = {
       video: false
    };
 const CONTOUR_TO_QUERY_CHAR = [
-      'a', 'b', 'c', 'd', 'e', 
-      'f', 'g', 'h', 'i', 'j', 
-      'k', 'l', 'm', 'n', 'o',
-      'p', 'q', 'r', 's', 't', 
-      'u', 'v', 'w', 'x', 'y', 
-      'z', 'A', 'B', 'C', 'D',
-      'E', 'F', 'G', 'H', 'I',
-      'J', 'K', 'L', 'M', 'N',
-      'O', 'P', 'Q', 'R', 'S',
-      'T', 'U', 'V'
+      "a", "b", "c", "d", "e", 
+      "f", "g", "h", "i", "j", 
+      "k", "l", "m", "n", "o",
+      "p", "q", "r", "s", "t", 
+      "u", "v", "w", "x", "y", 
+      "z", "A", "B", "C", "D",
+      "E", "F", "G", "H", "I",
+      "J", "K", "L", "M", "N",
+      "O", "P", "Q", "R", "S",
+      "T", "U", "V"
    ];
 const PITCH_MODEL_SCORE_ARRAY = [
       (PITCH_MODEL_SHIFT + -2.6399) * PITCH_MODEL_WEIGHT, // -12,
@@ -142,27 +142,27 @@ const MODE_SHAPE = [
       }
    ];
 const KEYS_BY_RELATIVE_MIDI = [
-      { Letter: 'C', Modifier: 0 },
-      { Letter: 'C', Modifier: 1 },
-      { Letter: 'D', Modifier: 0 },
-      { Letter: 'E', Modifier: -1 },
-      { Letter: 'E', Modifier: 0 },
-      { Letter: 'F', Modifier: 0 },
-      { Letter: 'F', Modifier: 1 },
-      { Letter: 'G', Modifier: 0 },
-      { Letter: 'A', Modifier: -1 },
-      { Letter: 'A', Modifier: 0 },
-      { Letter: 'B', Modifier: -1 },
-      { Letter: 'B', Modifier: 0 }
+      { Letter: "C", Modifier: 0 },
+      { Letter: "C", Modifier: 1 },
+      { Letter: "D", Modifier: 0 },
+      { Letter: "E", Modifier: -1 },
+      { Letter: "E", Modifier: 0 },
+      { Letter: "F", Modifier: 0 },
+      { Letter: "F", Modifier: 1 },
+      { Letter: "G", Modifier: 0 },
+      { Letter: "A", Modifier: -1 },
+      { Letter: "A", Modifier: 0 },
+      { Letter: "B", Modifier: -1 },
+      { Letter: "B", Modifier: 0 }
    ];
 const KEY_TO_OFFSET = new Map([
-  ['A', 0],
-  ['B', 2],
-  ['C', 3],
-  ['D', 5],
-  ['E', 7],
-  ['F', 8],
-  ['G', 10],
+  ["A", 0],
+  ["B", 2],
+  ["C", 3],
+  ["D", 5],
+  ["E", 7],
+  ["F", 8],
+  ["G", 10],
 ]);
 const SCALE_LETTERS = "ABCDEFG";
 const SCALE_MODIFIERS = [

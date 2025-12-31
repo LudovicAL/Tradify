@@ -33,15 +33,17 @@ async function startRecording(onFinishedRecording, recordingNumber) {
    console.log("Started: Start Recording");
    audioSampleArray = [];
    if (!navigator || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      alert('Missing support for navigator.mediaDevices.getUserMedia');
-      console.log('Missing support for navigator.mediaDevices.getUserMedia');
+      let errorMessage = getTranslation("userMediaNotSupported", "Votre navigateur n'a pas les fonctionnalités requises. Veuillez changer de navigateur.");
+      alert(errorMessage);
+      console.log(errorMessage);
       return recordingNumber;
    }
    try {
       micStream = await navigator.mediaDevices.getUserMedia(USER_MEDIA_CONSTRAINTS);
    } catch (e) {
-      alert('Error while initializing micStream.');
-      console.log('Error while initializing micStream.');
+      let errorMessage = getTranslation("userMediaNotSupported", "Votre navigateur n'a pas les fonctionnalités requises. Veuillez changer de navigateur.");
+      alert(errorMessage);
+      console.log(errorMessage);
       return recordingNumber;
    }
    audioContext = new (window.AudioContext || window.webkitAudioContext)();
