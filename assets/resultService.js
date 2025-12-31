@@ -23,13 +23,13 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
       const hCellTuneName = document.createElement("td");
       hCellTuneName.textContent = getTranslation("Title", "Titre");
       hCellTuneName.classList.add("text-center");
-      hCellRank.setAttribute("data-i18n-key", "Title");
+      hCellTuneName.setAttribute("data-i18n-key", "Title");
       hRow.appendChild(hCellTuneName);
       //Header score column
       const hCellScore = document.createElement("td");
       hCellScore.textContent = getTranslation("Score", "Score");
       hCellScore.classList.add("text-center");
-      hCellRank.setAttribute("data-i18n-key", "Score");
+      hCellScore.setAttribute("data-i18n-key", "Score");
       hRow.appendChild(hCellScore);
       tHead.appendChild(hRow);
       resultTable.appendChild(tHead);
