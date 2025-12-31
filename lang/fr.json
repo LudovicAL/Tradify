@@ -2,7 +2,7 @@
    "title": "Tradify",
    "noscript": "Javascript doit être activé votre navigateur pour que cette page fonctionne correctement. Veuillez l'activer et recharger la page.",
    "about": "À propos",
-   "lead": "Cette application permet d'identifier des pièces de musique traditionnelles québécoises et irlandaises et d'en récupérer les partitions. Elle est fortement inspirée du travail de Tom Willy (<a href=\"https://folkfriend.app/\\" target=\"_blank\">FolkFriend</a>).",
+   "lead": "Cette application permet d'identifier des pièces de musique traditionnelles québécoises et irlandaises et d'en récupérer les partitions. Elle est fortement inspirée du travail de Tom Willy (FolkFriend).",
    "links": "Liens utiles",
    "followLink": "Y aller",
    "repositoryTitle": "Dépôt Github",
@@ -27,5 +27,5 @@
    "tunearchDescription": "Un dépôt de partitions pour la musique traditionnelle.",
    "folktunefinderTitle": "Folk Tune Finder",
    "folktunefinderDescription": "Un dépôt de partitions pour la musique traditionnelle.",
-   "footer": "Adapté du travail de Tom Wyllie (<a href=\"https://folkfriend.app/\\" target=\"_blank\">FolkFriend</a>) par Ludovic A.-Lussier."
+   "footer": "Adapté du travail de Tom Wyllie (FolkFriend) par Ludovic A.-Lussier."
 }

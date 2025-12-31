@@ -2,7 +2,7 @@
    "title": "Tradify",
    "noscript": "Javascript must be enabled in your browser for this page to work properly. Please activate it and reload the page.",
    "about": "About",
-   "lead": "This app allows users to identify traditional Quebec and Irish tunes and retrieve their sheet music. It is heavily inspired by the work of Tom Willy (<a href=\"https://folkfriend.app/\\" target=\"_blank\">FolkFriend</a>).",
+   "lead": "This app allows users to identify traditional Quebec and Irish tunes and retrieve their sheet music. It is heavily inspired by the work of Tom Willy (FolkFriend).",
    "links": "Useful links",
    "followLink": "Visit page",
    "repositoryTitle": "Github Repository",
@@ -27,5 +27,5 @@
    "tunearchDescription": "A repository of sheet music for traditional music.",
    "folktunefinderTitle": "Folk Tune Finder",
    "folktunefinderDescription": "A repository of sheet music for traditional music.",
-   "footer": "Adapté du travail de Tom Wyllie (<a href=\"https://folkfriend.app/\\" target=\"_blank\">FolkFriend</a>) par Ludovic A.-Lussier."
+   "footer": "Adapté du travail de Tom Wyllie (FolkFriend) par Ludovic A.-Lussier."
 }
