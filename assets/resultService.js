@@ -4,11 +4,11 @@ function clearTable() {
    resultTable.innerHTML = "";
 }
 
-function startDisplaying(onFinishedDisplaying, searchResult) {
+function startDisplaying(onFinishedDisplaying, tuneSearch) {
    console.log("Started: Result displaying");
    clearTable();
-   if (searchResult.rankedTunes.length > 0) {
-      console.log("   Best result: " + tuneIndex[searchResult.rankedTunes[0].tune_id].file_name);
+   if (tuneSearch.rankedTunes.length > 0) {
+      console.log("   Best result: " + tuneIndex[tuneSearch.rankedTunes[0].tune_id].file_name);
       const tHead = document.createElement("thead");
       tHead.classList.add("table-dark");
       tHead.classList.add("fw-bold");
@@ -34,8 +34,8 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
       tHead.appendChild(hRow);
       resultTable.appendChild(tHead);
       const tBody = document.createElement("tbody");
-      for (let i = 0, max = searchResult.rankedTunes.length; i < max; i++) {
-         let tune = tuneIndex[searchResult.rankedTunes[i].tune_id];
+      for (let i = 0, max = tuneSearch.rankedTunes.length; i < max; i++) {
+         let tune = tuneIndex[tuneSearch.rankedTunes[i].tune_id];
          //Tune rank column
          const bRow = document.createElement("tr");
          const bCellRank = document.createElement("td");
@@ -53,7 +53,7 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
          bRow.appendChild(bCellTuneName);
          //Tune score column
          const bCellScore = document.createElement("td");
-         let score = searchResult.rankedTunes[i].score;
+         let score = tuneSearch.rankedTunes[i].score;
          //Score > 0.65 = Very close ; > 0.5 = Close ; > 0.2 = Possible ; Unlikely
          switch (true) {
             case (score >= 0.65):
@@ -84,6 +84,6 @@ function startDisplaying(onFinishedDisplaying, searchResult) {
       row.appendChild(cell);
       resultTable.appendChild(row);
    }
-   onFinishedDisplaying(searchResult.recordingNumber);
    console.log("Finished: Result displaying");
+   onFinishedDisplaying(tuneSearch);
 }

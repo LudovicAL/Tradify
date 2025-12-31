@@ -7,22 +7,23 @@ It works by:
 2- Eliminating noise by keeping only frequencies of peek intensity
 3- Eliminating short burst of sound, keeping only longer burst
 */
-function startProcessing(onFinishedProcessing, recordingResult) {
+function startProcessing(onFinishedProcessing, tuneSearch) {
    console.log("Started: Audio processing");
    //Applying a the Fast Fourier Transform algorithm to the data
-   let windowFrameArray = computeWindowFrame(recordingResult.audioSampleArray, recordingResult.sampleRate);
+   let windowFrameArray = computeWindowFrame(tuneSearch.audioSampleArray, tuneSearch.sampleRate);
    //Eliminating noise by keeping only frequencies of peek intensity
    let latticeArray = computeLattice(windowFrameArray);
    //Eliminating short burst of sound, keeping only longer burst
-   let contourString = computeContour(windowFrameArray, latticeArray, recordingResult.sampleRate);
+   let contourString = computeContour(windowFrameArray, latticeArray, tuneSearch.sampleRate);
    console.log("   ContourString:\n", contourString);
    if (DEBUG_MODE) {
       let contour = contourStringToContour(contourString);
       let abc = contourToAbc(contour);
       console.log("   Abc:\n" + abc);
    }
+   tuneSearch.setContourString(contourString);
    console.log("Finished: Audio processing");
-   onFinishedProcessing({ contourString: contourString, recordingNumber: recordingResult.recordingNumber });
+   onFinishedProcessing(tuneSearch);
 }
 
 function computeWindowFrame(audioSampleArray, sampleRate) {

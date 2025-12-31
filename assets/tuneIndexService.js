@@ -19,15 +19,16 @@ async function loadTuneIndex() {
 This function is the gateway to tune searching.
 Provided with a contour string, it returns the best corresponding matches from the database.
 */
-function startSearching(onFinishedSearching, processingResult) {
+function startSearching(onFinishedSearching, tuneSearch) {
    console.log("Started: Tune index searching");
    let secondSearchResult = [];
-   if (processingResult.contourString.length > 0) {
-      let firstSearchResult = performFirstSearch(processingResult.contourString);
-      secondSearchResult = performSecondSearch(processingResult.contourString, firstSearchResult);
+   if (tuneSearch.contourString.length > 0) {
+      let firstSearchResult = performFirstSearch(tuneSearch.contourString);
+      secondSearchResult = performSecondSearch(tuneSearch.contourString, firstSearchResult);
    }
+   tuneSearch.setRankedTunes(secondSearchResult);
    console.log("Finished: Tune index searching");
-   onFinishedSearching({ rankedTunes: secondSearchResult, recordingNumber: processingResult.recordingNumber });
+   onFinishedSearching(tuneSearch);
 }
 
 /*

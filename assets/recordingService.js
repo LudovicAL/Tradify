@@ -29,14 +29,14 @@ async function startImporting() {
 }
 */
 
-async function startRecording(onFinishedRecording, recordingNumber) {
+async function startRecording(onFinishedRecording, tuneSearch) {
    console.log("Started: Start Recording");
    audioSampleArray = [];
    if (!navigator || !navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
       let errorMessage = getTranslation("userMediaNotSupported", "Votre navigateur n'a pas les fonctionnalités requises. Veuillez changer de navigateur.");
       alert(errorMessage);
       console.log(errorMessage);
-      return recordingNumber;
+      return;
    }
    try {
       micStream = await navigator.mediaDevices.getUserMedia(USER_MEDIA_CONSTRAINTS);
@@ -44,7 +44,7 @@ async function startRecording(onFinishedRecording, recordingNumber) {
       let errorMessage = getTranslation("userMediaNotSupported", "Votre navigateur n'a pas les fonctionnalités requises. Veuillez changer de navigateur.");
       alert(errorMessage);
       console.log(errorMessage);
-      return recordingNumber;
+      return;
    }
    audioContext = new (window.AudioContext || window.webkitAudioContext)();
    micProcessor = audioContext.createScriptProcessor(WINDOW_SIZE, 1, 1);
@@ -55,14 +55,14 @@ async function startRecording(onFinishedRecording, recordingNumber) {
    micSource.connect(micProcessor);
    micProcessor.connect(audioContext.destination);
    setTimeout(() => {
-      onFinishedRecording(recordingNumber);
+      onFinishedRecording(tuneSearch);
    }, RECORDING_TIME_LIMIT_MS);
    clearTable();
    jitterButton();
    console.log("Finished: Start recording");
 }
 
-async function stopRecording(recordingNumber) {
+async function stopRecording(tuneSearch) {
    console.log("Started: Stop recording");
    let sampleRate = audioContext.sampleRate;
    if (micProcessor) {
@@ -77,6 +77,8 @@ async function stopRecording(recordingNumber) {
       await audioContext.close();
       audioContext = null;
    }
+   tuneSearch.setAudioSampleArray(audioSampleArray);
+   tuneSearch.setSampleRate(sampleRate);
    console.log("Finished: Stop recording");
-   return { audioSampleArray: audioSampleArray, sampleRate: sampleRate, recordingNumber: recordingNumber };
+   return tuneSearch;
 }
