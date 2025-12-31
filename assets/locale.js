@@ -3,13 +3,14 @@
 
 // The locale our app first shows
 const defaultLocale = "fr";
+const supportedLocales = ["fr", "en"];
 // The active locale
 let locale;
 // Gets filled with active locale translations
 let translations = {};
 // When the page content is ready...
 document.addEventListener("DOMContentLoaded", () => {
-   // Translate the page to the default locale
+   const initialLocale = supportedOrDefault(browserLocales(true));
    setLocale(defaultLocale);
    bindLocaleSwitcher(defaultLocale);
 });
@@ -24,6 +25,22 @@ async function setLocale(newLocale) {
    locale = newLocale;
    translations = newTranslations;
    translatePage();
+}
+
+function isSupported(locale) {
+   return supportedLocales.indexOf(locale) > -1;
+}
+
+// Retrieve the first locale we support from the given
+// array, or return our default locale
+function supportedOrDefault(locales) {
+   return locales.find(isSupported) || defaultLocale;
+}
+
+function browserLocales(languageCodeOnly = false) {
+   return navigator.languages.map((locale) => {
+      languageCodeOnly ? locale.split("-")[0] : locale;
+   });
 }
 
 // Retrieve translations JSON object for the given
