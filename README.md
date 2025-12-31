@@ -9,4 +9,3 @@ Voici ce qu'il reste à faire:
 
 - Construire une liste de pièces que l'application ne doit pas inclure dans l'index
 - Permettre à l'utilisateur de soumettre un fichier wav pour analyse
-- Ajouter un lien vers BuyMeACoffee
