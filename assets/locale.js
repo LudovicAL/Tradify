@@ -8,12 +8,6 @@ const supportedLocales = ["fr", "en"];
 let locale;
 // Gets filled with active locale translations
 let translations = {};
-// When the page content is ready...
-document.addEventListener("DOMContentLoaded", () => {
-   const initialLocale = supportedOrDefault(browserLocales(true));
-   setLocale(defaultLocale);
-   bindLocaleSwitcher(defaultLocale);
-});
 
 // Load translations for the given locale and translate
 // the page to this locale
@@ -46,8 +40,7 @@ function browserLocales(languageCodeOnly = false) {
 // Retrieve translations JSON object for the given
 // locale over the network
 async function fetchTranslationsFor(newLocale) {
-   const response = await fetch("https://raw.githubusercontent.com/LudovicAL/Tradify/refs/heads/main/lang/REPLACE.json".replaceAll("REPLACE", newLocale));
-   return await response.json();
+   return await fetchJsonFile("https://raw.githubusercontent.com/LudovicAL/Tradify/refs/heads/main/lang/REPLACE.json".replaceAll("REPLACE", newLocale), newLocale, 1);
 }
 
 // Replace the inner text of each element that has a
