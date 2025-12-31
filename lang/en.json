@@ -3,10 +3,11 @@
    "noscript": "Javascript must be enabled in your browser for this page to work properly. Please activate it and reload the page.",
    "about": "About",
    "lead": "This app allows users to identify traditional Quebec and Irish tunes and retrieve their sheet music. It is heavily inspired by the work of Tom Willy (FolkFriend).",
+   "download": "Download the sheet music in ZIP format",
    "links": "Useful links",
    "followLink": "Visit page",
    "repositoryTitle": "Github Repository",
-   "repositoryDescription": "A repository for quebecois and irish sheet music.",
+   "repositoryDescription": "A repository for Quebec and irish sheet music.",
    "folksetTitle": "Folkset",
    "folksetDescription": "The Github repository for a partition reader project for Android devices.",
    "musescoreTitle": "Musescore",
@@ -27,5 +28,5 @@
    "tunearchDescription": "A repository of sheet music for traditional music.",
    "folktunefinderTitle": "Folk Tune Finder",
    "folktunefinderDescription": "A repository of sheet music for traditional music.",
-   "footer": "Adapté du travail de Tom Wyllie (FolkFriend) par Ludovic A.-Lussier."
+   "footer": "Adapted from the work of Tom Wyllie (FolkFriend) by Ludovic A.-Lussier."
 }
