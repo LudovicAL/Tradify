@@ -243,8 +243,7 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
       }
    }
    if (noteArray.length <= 3) {
-      alert("There were no notes to be heard.");
-      throw "There were no notes to be heard.";
+      return "";
    }
    let bestTempoLowBmp = LOW_BPM;
    let bestTempoScore = -Infinity;

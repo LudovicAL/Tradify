@@ -28,7 +28,7 @@ function onFinishedRecording(currentRecordingNumber) {
       stopRecording(currentRecordingNumber).then(result => {
          if (currentStatus === Status.PROCESSING && result.recordingNumber === recordingNumber) {
             if (result.audioSampleArray.length < 10) {
-               let errorMessage = getTranslation("insufficentDataForAnalysis", "Les données enregistrées sont insuffisantes pour poursuivre avec l'analyse.");
+               let errorMessage = getTranslation("insufficentDataForAnalysis", "Les données enregistrées sont insuffisantes pour poursuivre avec l'analyse. Vous jouez peut-être votre musique trop doucement.");
                alert(errorMessage);
                console.log(errorMessage);
                currentStatus = Status.DISPLAYING;
@@ -44,7 +44,7 @@ function onFinishedRecording(currentRecordingNumber) {
 function onFinishedProcessing(processingResult) {
    if (currentStatus === Status.PROCESSING && processingResult.recordingNumber === recordingNumber) {
       if (processingResult.contourString.length < 5) {
-         let errorMessage = getTranslation("insufficentDataForSearch", "Les données enregistrées sont insuffisantes pour poursuivre avec la recherche.");
+         let errorMessage = getTranslation("insufficentDataForSearch", "Les données enregistrées sont insuffisantes pour poursuivre avec la recherche. Vous jouez peut-être votre musique trop doucement.");
          alert(errorMessage);
          console.log(errorMessage);
          currentStatus = Status.DISPLAYING;

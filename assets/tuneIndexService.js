@@ -7,6 +7,15 @@ and updated only every 28 days (provided the client has internet access).
 var tuneIndex;
 
 /*
+This function is called on page load, it loads the tune index.
+*/
+async function loadTuneIndex() {
+   console.log("Started: Tune index retrieval");
+   tuneIndex = await fetchJsonFile(TUNE_INDEX_URL, "tuneIndex", 28);
+   console.log("Finished: Tune index retrieval");
+}
+
+/*
 This function is the gateway to tune searching.
 Provided with a contour string, it returns the best corresponding matches from the database.
 */

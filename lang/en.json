@@ -32,7 +32,7 @@
    "Rank": "Rank",
    "Title": "Title",
    "Score": "Score",
-   "insufficentDataForAnalysis": "The recorded data is insufficent to proceed further with analysis.",
-   "insufficentDataForSearch": "The recorded data is insufficent to proceed further with the search.",
+   "insufficentDataForAnalysis": "The recorded data is insufficent to proceed further with analysis. You may be playing your music too softly.",
+   "insufficentDataForSearch": "The recorded data is insufficent to proceed further with the search. You may be playing your music too softly.",
    "zeroResult": "0 result. Try again!"
 }

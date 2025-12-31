@@ -11,9 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 window.onload = async () => {
    await waitForBoolean();
-   console.log("Started: Tune index retrieval");
-   tuneIndex = fetchJsonFile(TUNE_INDEX_URL, "tuneIndex", 28);
-   console.log("Finished: Tune index retrieval");
+   await loadTuneIndex();
 };
 
 function waitForBoolean() {
