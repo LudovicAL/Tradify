@@ -11,6 +11,8 @@ function onStartRecordingButtonClick() {
       currentStatus = Status.RECORDING;
       const tuneSearch = new TuneSearch(recordingNumber, currentStatus);
       startRecording(onFinishedRecording, tuneSearch);
+   } else if (currentStatus === Status.RECORDING) {
+      currentStatus = Status.IDLE;
    }
 }
 
