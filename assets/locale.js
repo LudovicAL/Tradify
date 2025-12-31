@@ -29,7 +29,7 @@ async function setLocale(newLocale) {
 // Retrieve translations JSON object for the given
 // locale over the network
 async function fetchTranslationsFor(newLocale) {
-   const response = await fetch("https://github.com/LudovicAL/Tradify/tree/main/lang/${newLocale}.json");
+   const response = await fetch("https://raw.githubusercontent.com/LudovicAL/Tradify/refs/heads/main/lang/REPLACE.json".replaceAll("REPLACE", newLocale));
    return await response.json();
 }
 
