@@ -17,15 +17,21 @@
 </head>
 
 <body class="d-flex flex-column h-100">
-   <noscript>This page requires Javascript enabled in your browser to work.</noscript>
+   <noscript>Veuillez activer Javascript dans votre navigateur pour faire fonctionner cette page.</noscript>
    <div class="container m-5">
       <div class="container ml-5">
-         <button type="button" class="btn btn-secondary" data-bs-toggle="collapse" data-bs-target="#aboutCollapsed">À propos</button>
+         <div class="d-flex justify-content-between">
+            <button type="button" class="btn btn-secondary " data-bs-toggle="collapse" data-bs-target="#aboutCollapsed">À propos</button>
+            <select data-i18n-switcher class="form-select w-auto" aria-label="Sélecteur de langue">
+               <option value="fr" selected>fr</option>
+               <option value="en">en</option>
+            </select>
+         </div>
          <div class="d-flex justify-content-center">
             <img src="icons/Title.png" alt="Tradify" class="img-fluid" style="height:100px">
          </div>
          <div id="aboutCollapsed" class="collapse mt-3 p-4 bg-light rounded">
-            <p>
+            <p data-i18n-key="lead">
                Cette application permet d'identifier des pièces de musique traditionnelles québécoises et irlandaises et d'en récupérer les partitions.
                Elle est fortement inspirée du travail de Tom Willy (<a href="https://folkfriend.app/" target="_blank">FolkFriend</a>).
             </p>
@@ -148,6 +154,7 @@
    <script type="text/javascript" src="assets/als-wave-parser/wav-parser.js"></script>
    <script type="text/javascript" src="assets/fft/utils.js"></script>
    <script type="text/javascript" src="assets/fft/fft.js"></script>
+   <script type="text/javascript" src="assets/locale.js"></script>
    <script type="text/javascript" src="assets/constants.js"></script>
    <script type="text/javascript" src="assets/utils.js"></script>
    <script type="text/javascript" src="assets/resultService.js"></script>
