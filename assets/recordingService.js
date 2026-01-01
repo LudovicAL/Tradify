@@ -5,30 +5,6 @@ var micSource = null;
 var sampleRate = null;
 var audioSampleArray = null;
 
-/*
-async function startImporting() {
-   console.log("Started: Start Importing");
-   audioSampleArray = [];
-   let rawSampleArray = [];
-   const response = await fetch("https://cdn.jumpshare.com/download/05PzMwKsyucve8jSFgqK6DpTXc0icSz9a00bMaWtNRHJLKhMchko-yD_DKZLoXW8wW4nLJnMZXWyf93dZdxz5ab5RW6_a-qVqU5Z46JHJVg");
-   const arrayBuffer = await response.arrayBuffer();
-   const waveParser = new WaveParser(arrayBuffer);
-   let dataLength = waveParser.samples[0].length + waveParser.samples[1].length;
-   let numWindows = Math.floor(dataLength / WINDOW_SIZE);
-   let lastIndice = numWindows * WINDOW_SIZE;
-   for (let i = 0; i < numWindows; i++) {
-      let windowArray = [];
-      for (let j = (i * (WINDOW_SIZE / 2)), max = Math.min((dataLength / 2), (((i + 1) * WINDOW_SIZE) / 2)); j < max; j++) {
-         windowArray.push(waveParser.samples[0][j]);
-         windowArray.push(waveParser.samples[1][j]);
-      }
-      audioSampleArray.push(windowArray);
-   }
-   processAudioSampleArray(audioSampleArray, waveParser.sampleRate);
-   console.log("Finished: Start Importing");
-}
-*/
-
 async function startRecording(onFinishedRecording, tuneSearch) {
    console.log("Started: Start Recording");
    audioSampleArray = [];

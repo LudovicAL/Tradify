@@ -1,7 +1,8 @@
 class TuneSearch {
-   constructor(recordingNumber, currentStatus) {
+   constructor(recordingNumber, currentStatus, wavFile) {
       this.recordingNumber = recordingNumber;
       this.currentStatus = currentStatus;
+      this.wavFile = wavFile;
       this.recordedAudioSampleArray = [];
       this.sampleRate = 1;
       this.contourString = "";

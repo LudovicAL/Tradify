@@ -1,15 +1,16 @@
 var startRecordingButton = document.getElementById("startRecordingButton");
 var startRecordingImage = document.getElementById("startRecordingImage");
+var importWavButton = document.getElementById("importWavButton");
+var hiddenFilePicker = document.getElementById("hiddenFilePicker");
 var currentStatus = Status.IDLE;
 var recordingNumber = 0;
 var currentCogRotation = 0;
-
 
 function onStartRecordingButtonClick() {
    if (currentStatus === Status.IDLE) {
       recordingNumber++;
       currentStatus = Status.RECORDING;
-      const tuneSearch = new TuneSearch(recordingNumber, currentStatus);
+      const tuneSearch = new TuneSearch(recordingNumber, currentStatus, null);
       startRecording(onFinishedRecording, tuneSearch);
    } else if (currentStatus === Status.RECORDING) {
       currentStatus = Status.IDLE;
@@ -33,6 +34,34 @@ function onFinishedRecording(tuneSearch) {
             }
          }
       });
+   }
+}
+
+function onStartImporting(event) {
+   if (currentStatus === Status.IDLE) {
+      const files = event.target.files;
+      if (validateFile(files)) {
+         recordingNumber++;
+         currentStatus = Status.IMPORTING;
+         const tuneSearch = new TuneSearch(recordingNumber, currentStatus, files[0]);
+         startImporting(onFinishedImporting, tuneSearch);
+      }
+   }
+}
+
+function onFinishedImporting(tuneSearch) {
+   if (currentStatus === Status.IMPORTING && tuneSearch.recordingNumber === recordingNumber) {
+      currentStatus = tuneSearch.setStatus(Status.PROCESSING);
+      if (tuneSearch.audioSampleArray.length < 10) {
+         let errorMessage = getTranslation("insufficentDataForAnalysis", "Les données enregistrées sont insuffisantes pour poursuivre avec l'analyse. Vous jouez peut-être votre musique trop doucement.");
+         alert(errorMessage);
+         console.log(errorMessage);
+         currentStatus = tuneSearch.setStatus(Status.DISPLAYING);
+         startDisplaying(onFinishedDisplaying, { rankedTunes: [] });
+      } else {
+         rotateCogs();
+         startProcessing(onFinishedProcessing, tuneSearch);
+      }
    }
 }
 
@@ -90,36 +119,13 @@ function rotateCogs() {
    }
 }
 
-/*
-function onRecordButtonClick() {
-   const recordImage = document.getElementById("recordImage");
-   recordImage.src = "icons/Recording1.svg";
-   jitterButton();
-}
-
-async function jitterButton() {
-   recordButton.style.transform = `scale(${0.9 + 0.05 * Math.random()})`;
-   window.requestAnimationFrame(jitterButton);
-}
-
-function onStartSearchingButtonClick() {
-   startSearching("UqURURsqqooqKRqqqqqUURNoqqqssqqooqqsKlllljRRRRssssRUqRRoqUqqqqsRRRURoljRURlUPRUU");
-}
-
-function onStartImportingButtonClick() {
-   startImporting();
-}
-
-function onStartRecordingButtonClick() {
-   startRecording();
-}
-
-function onStopRecordingButtonClick() {
-   stopRecording();
-}
-*/
-
 startRecordingButton.addEventListener("click", onStartRecordingButtonClick);
+importWavButton.onclick = function() {
+   hiddenFilePicker.click();
+};
+hiddenFilePicker.addEventListener('change', (event) => {
+   onStartImporting(event);
+});
 
 if (DEBUG_MODE) {
    document.getElementById("debugDiv").classList.remove("collapse");;
