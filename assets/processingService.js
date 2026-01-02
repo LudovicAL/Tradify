@@ -37,9 +37,9 @@ function startProcessing(onFinishedProcessing, tuneSearch) {
  */
 function computeWindowFrame(audioSampleArray, sampleRate) {
    console.log("   Started: Window frame computing");
-   let windowFrameArray = new Array(audioSampleArray.length);
-   for (let i = 0, max = audioSampleArray.length; i < max; i++) {
-      windowFrameArray[i] = processAudioSample(audioSampleArray[i], sampleRate);
+   let windowFrameArray = [];
+   for (let audioSample of audioSampleArray) {
+      windowFrameArray.push(processAudioSample(audioSample, sampleRate));
    }
    if (DEBUG_MODE) {
       drawArrayOfArraysOnCanvas("signalCanvas", windowFrameArray, windowFrameArray.length, MIDI_NUM);
@@ -185,9 +185,9 @@ function computeLattice(windowFrameArray) {
    }
    //Normalise data
    let normal = windowFrameArray.length / totalEnergy;
-   for (let i = 0, max = windowFrameArray.length; i < max; i++) {
+   for (let windowFrame in windowFrameArray) {
       for (let j = 0; j < MIDI_NUM; j++) {
-         windowFrameArray[i][j] *= normal; 
+         windowFrame[j] *= normal; 
       }
    }
    //Retain only the optimal path from the start to each pitch
@@ -295,9 +295,9 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
    }
    let bestQuantisedNotesArray = bestTempoQuantisedNoteArray;
    let contourArray = [];
-   for (let i = 0, max = bestQuantisedNotesArray.length; i < max; i++) {
-      for(let j = 0, max = bestQuantisedNotesArray[i].quavers_quant; j < max; j++) {
-         contourArray.push(bestQuantisedNotesArray[i].pitch);         
+   for (let bestQuantisedNotes of bestQuantisedNotesArray) {
+      for(let j = 0, max = bestQuantisedNotes.quavers_quant; j < max; j++) {
+         contourArray.push(bestQuantisedNotes.pitch);         
       }
    }
    //Correct contour octave
@@ -306,8 +306,8 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
    let decisionIndex = Math.round(contourArrayClone.length * (1.0 - SHRILL_THRESHOLD_ENERGY));
    if (contourArrayClone[decisionIndex] >= SHRILL_THRESHOLD_PITCH) {
       for (let i = 0, max = contourArray.length; i < max; i++) {
-         if (contourArray[i] > (MIDI_LOW + 12)) {
-            contourArray[i] -= 12;
+         if (contourArray > (MIDI_LOW + 12)) {
+            contourArray -= 12;
          }
       }
    }
@@ -383,15 +383,15 @@ function quantiseNotes(noteArray, framesPerQuaver) {
 function scoreQuantisedNotes(quantisedNotesArray, noteArray, framesPerQuaver) {
    //Compute number of frames
    let numInputFrames = 0.0;
-   for (let i = 0, max = noteArray.length; i < max; i++) {
-      numInputFrames += noteArray[i].duration;
+   for (let currentNote of noteArray) {
+      numInputFrames += currentNote.duration;
    }
    //Compute quantisation error and probability model score
    let quantError = 0.0;
    let probabilityModelScore = 0.0;
-   for (let i = 0, max = quantisedNotesArray.length; i < max; i++) {
-      quantError += Math.abs(quantisedNotesArray[i].quavers_exact - quantisedNotesArray[i].quavers_quant) * quantisedNotesArray[i].power;
-      probabilityModelScore += 3.0 - 0.5 * quantisedNotesArray[i].quavers_quant;
+   for (let quantisedNotes of quantisedNotesArray) {
+      quantError += Math.abs(quantisedNotes.quavers_exact - quantisedNotes.quavers_quant) * quantisedNotes.power;
+      probabilityModelScore += 3.0 - 0.5 * quantisedNotes.quavers_quant;
    }
    //Normalise by number of quantised quavers
    probabilityModelScore /= quantisedNotesArray.length;

@@ -112,7 +112,7 @@ function onFinishedProcessing(tuneSearch) {
          alert(errorMessage);
          console.log(errorMessage);
          currentStatus = tuneSearch.setStatus(Status.DISPLAYING);
-         startDisplaying(onFinishedDisplaying, { rankedTunes: [] });
+         startDisplaying(onFinishedDisplaying, tuneSearch);
       } else {
          currentStatus = tuneSearch.setStatus(Status.SEARCHING);
          startSearching(onFinishedSearching, tuneSearch);

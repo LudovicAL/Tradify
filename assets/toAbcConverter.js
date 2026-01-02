@@ -7,8 +7,8 @@
 function contourStringToContour(contourString) {
    console.log("Started: Converting contour-string to contour");
    let contourArray = [];
-   for (let i = 0, max = contourString.length; i < max; i++) {
-      contourArray.push(CONTOUR_TO_QUERY_CHAR.indexOf(contourString[i]) + MIDI_LOW);
+   for (let character in contourString) {
+      contourArray.push(CONTOUR_TO_QUERY_CHAR.indexOf(character) + MIDI_LOW);
    }
    console.log("Finished: Converting contour-string to contour");
    return contourArray;
@@ -26,14 +26,14 @@ function contourToAbc(contourArray) {
    let contourWithDurationArray = [];
    let duration = 0;
    let lastPitch = contourArray[0];
-   for (let i = 0, max = contourArray.length; i < max; i++) {
-      if (contourArray[i] !== lastPitch || duration >= 4) {
+   for (let character in contourArray) {
+      if (character !== lastPitch || duration >= 4) {
          contourWithDurationArray.push({ Pitch: lastPitch, Duration: duration });
          duration = 1;
       } else {
          duration += 1;
       }
-      lastPitch = contourArray[i];
+      lastPitch = character;
    }
    contourWithDurationArray.push({ Pitch: lastPitch, Duration: duration });
    //Auto-detect the key / mode based on the pitches in the contour
@@ -44,7 +44,7 @@ function contourToAbc(contourArray) {
    let activeModifiers = new Map();
    let bar = []
    let bars = []
-   for (let i = 0, max = contourWithDurationArray.length; i < max; i++) {
+   for (let contourWithDuration in contourWithDurationArray) {
       if (bar.length === 4) {
          bar.push(" ");
       }
@@ -53,10 +53,10 @@ function contourToAbc(contourArray) {
          activeModifiers = new Map();
          bar = [];
       }
-      let abcNote = abcVocabulary.get(contourWithDurationArray[i].Pitch);
+      let abcNote = abcVocabulary.get(contourWithDuration.Pitch);
       let durationStr = "";
-      if (contourWithDurationArray[i].Duration >= 2) {
-         durationStr = contourWithDurationArray[i].Duration.toString();
+      if (contourWithDuration.Duration >= 2) {
+         durationStr = contourWithDuration.Duration.toString();
       }
       let unmodifiedNote = getLetterAbc(abcNote);
       let noteIsModified = activeModifiers.has(unmodifiedNote);
@@ -66,7 +66,7 @@ function contourToAbc(contourArray) {
          modifierLookup = activeModifiers.get(unmodifiedNote);
          modifierIsCorrect = modifierLookup === abcNote.Modifier;
       }
-      let condition1 = !noteIsModified && isAccidental(relativeMajor, contourWithDurationArray[i].Pitch);
+      let condition1 = !noteIsModified && isAccidental(relativeMajor, contourWithDuration.Pitch);
       let condition2 = noteIsModified && !modifierIsCorrect;
       let useModifier = condition1 || condition2;
       if (useModifier) {
@@ -80,12 +80,12 @@ function contourToAbc(contourArray) {
    }
    let outputAbc = "K:" + getKeyAsAbc(keyAndMode.Key) + getModeAsAbc(keyAndMode.Mode) + "\n";
    let barsOnLine = 0;
-   for (let i = 0, max = bars.length; i < max; i++) {
+   for (let currentBar in bars) {
       if (barsOnLine >= 4) {
          outputAbc += "\n";
          barsOnLine = 0;
       }
-      outputAbc += bars[i];
+      outputAbc += currentBar;
       outputAbc += " |";
       barsOnLine += 1;
    }
@@ -101,8 +101,8 @@ function contourToAbc(contourArray) {
  */
 function contourToKeyAndMode(contourArray) {
    let shapeQueryArray = new Array(12).fill(0.0);
-   for (let i = 0, max = contourArray.length; i < max; i++) {
-      shapeQueryArray[getEuclidianRemainder(contourArray[i], 12)] += 1.0
+   for (let character in contourArray) {
+      shapeQueryArray[getEuclidianRemainder(character, 12)] += 1.0
    }
    for (let i = 0, max = shapeQueryArray.length; i < max; i++) {
       shapeQueryArray.push(shapeQueryArray[i]);
@@ -112,14 +112,14 @@ function contourToKeyAndMode(contourArray) {
    let highKey = null;
    let slidingWindowSize = 12;
    for (let i = 0, maxI = (shapeQueryArray.length - slidingWindowSize); i < maxI; i++) {
-      for (let j = 0, maxJ = MODE_SHAPE.length; j < maxJ; j++) {
+      for (let modeShape in MODE_SHAPE) {
          let score = 0;
-         for (let k = 0, maxK = MODE_SHAPE[j].Values.length; k < maxK; k++) {
-            score += MODE_SHAPE[j].Values[k] * shapeQueryArray[i + k];
+         for (let k = 0, maxK = modeShape.Values.length; k < maxK; k++) {
+            score += modeShape.Values[k] * shapeQueryArray[i + k];
          }
          if (score > highScore) {
             highScore = score;
-            highMode = MODE_SHAPE[j].Tonic;
+            highMode = modeShape.Tonic;
             highKey = KEYS_BY_RELATIVE_MIDI[i];
          }
       }
@@ -170,16 +170,16 @@ function getAbcVocabulary(key) {
    let keySignature = getMajorKeySignature(key);
    let chromaticScale = [];
    let letterOffset = SCALE_LETTERS.indexOf(key.Letter);
-   for (let i = 0, max = SCALE_MODIFIERS.length; i < max; i++) {
-      let offset = letterOffset + SCALE_MODIFIERS[i].TonicOffset;
+   for (let scaleModifier in SCALE_MODIFIER) {
+      let offset = letterOffset + scaleModifier.TonicOffset;
       offset %= SCALE_LETTERS.length;
       let letter = SCALE_LETTERS[offset];
-      chromaticScale.push({ Letter: letter, Modifier: (keySignature.get(letter) + SCALE_MODIFIERS[i].Modifier) });
+      chromaticScale.push({ Letter: letter, Modifier: (keySignature.get(letter) + scaleModifier.Modifier) });
    }
    //Build our vocabulary for this key, for one arbitrary octave.
    let abcVocabOneOctave = new Map();
-   for (let i = 0, max = chromaticScale.length; i < max; i++) {
-      abcVocabOneOctave.set(getRelativeMidi(chromaticScale[i]), chromaticScale[i]);
+   for (let chromaticScaleElement in chromaticScale) {
+      abcVocabOneOctave.set(getRelativeMidi(chromaticScaleElement), chromaticScaleElement);
    }
    // Expand the one octave vocubulary all octaves.
    let abcVocabulary = new Map();
@@ -213,11 +213,11 @@ function getMajorKeySignature(key) {
       }
       modifierPtr += 1;
    }
-   for (let i = 0, max = CIRCLE_OF_FIFTHS.length; i < max; i++) {
-      if (baseKeySignature.has(CIRCLE_OF_FIFTHS[i])) {
-         baseKeySignature.set(CIRCLE_OF_FIFTHS[i], baseKeySignature.get(CIRCLE_OF_FIFTHS[i]) + key.Modifier);
+   for (let letter in CIRCLE_OF_FIFTHS) {
+      if (baseKeySignature.has(letter)) {
+         baseKeySignature.set(letter, baseKeySignature.get(letter) + key.Modifier);
       } else {
-         baseKeySignature.set(CIRCLE_OF_FIFTHS[i], key.Modifier);
+         baseKeySignature.set(letter, key.Modifier);
       }
    }
    return baseKeySignature;
