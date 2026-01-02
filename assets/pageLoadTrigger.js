@@ -14,6 +14,9 @@ window.onload = async () => {
    await loadTuneIndex();
 };
 
+/**
+ * Waits for the boolean 'localeLoaded' to be true before continuing.
+ */
 function waitForBoolean() {
    return new Promise((resolve) => {
       const checkInterval = setInterval(() => {

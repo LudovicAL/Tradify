@@ -1,3 +1,9 @@
+/**
+ * Converts a 'ContourString' to a 'Contour'.
+ *
+ * @param {String} contourString The 'ContourString' to be converted.
+ * @result The result of the conversion.
+ */
 function contourStringToContour(contourString) {
    console.log("Started: Converting contour-string to contour");
    let contourArray = [];
@@ -8,6 +14,12 @@ function contourStringToContour(contourString) {
    return contourArray;
 }
 
+/**
+ * Converts a 'Contour' to 'Abc'.
+ *
+ * @param {List<String>} contourArray The 'Contour' to be converted.
+ * @result The result of the conversion.
+ */
 function contourToAbc(contourArray) {
    console.log("Started: Converting contour to abc");
    //Compute midi durations
@@ -81,6 +93,12 @@ function contourToAbc(contourArray) {
    return outputAbc;
 }
 
+/**
+ * Deducts the key and mode from a 'Contour'.
+ *
+ * @param {List<String>} contourArray The 'Contour' from which the key and mode are to be deduced.
+ * @result An object containing the key and mode.
+ */
 function contourToKeyAndMode(contourArray) {
    let shapeQueryArray = new Array(12).fill(0.0);
    for (let i = 0, max = contourArray.length; i < max; i++) {
@@ -109,20 +127,45 @@ function contourToKeyAndMode(contourArray) {
    return { Key: highKey, Mode: highMode };
 }
 
+/**
+ * Deducts the relative major from the key and mode.
+ *
+ * @param {Object} keyAndMode An object containing the key and mode.
+ * @result The relative major.
+ */
 function getRelativeMajor(keyAndMode) {
    let relativeMidi = Math.floor(getRelativeMidi(keyAndMode.Key)) - keyAndMode.Mode;
    return KEYS_BY_RELATIVE_MIDI[getEuclidianRemainder(relativeMidi, (12))];
 }
 
+/**
+ * Deducts the relative midi from the key.
+ *
+ * @param {String} key The key.
+ * @result The relative midi.
+ */
 function getRelativeMidi(key) {
    let relativeMidi = 69 + key.Modifier + KEY_TO_OFFSET.get(key.Letter);
    return getEuclidianRemainder(relativeMidi, 12);
 }
 
+/**
+ * Computes the euclidian remainder.
+ *
+ * @param {String} value
+ * @param {int} modulo
+ * @result The euclidian remainder.
+ */
 function getEuclidianRemainder(value, modulo) {
    return Math.floor(((value % modulo) + modulo) % modulo)
 }
 
+/**
+ * Computes the abc vocabulary that can express every note associated with a given key.
+ *
+ * @param {String} key The key for which a vocabulary is to be computed.
+ * @result A map containing a vocabulary capable of expressing every note of the given key.
+ */
 function getAbcVocabulary(key) {
    let keySignature = getMajorKeySignature(key);
    let chromaticScale = [];
@@ -149,6 +192,12 @@ function getAbcVocabulary(key) {
    return abcVocabulary;
 }
 
+/**
+ * Deducts the major key signature from the key.
+ *
+ * @param {String} key The key.
+ * @result The major key signature.
+ */
 function getMajorKeySignature(key) {
    let baseKeySignature = new Map();
    // Initialise key signature as F major
@@ -174,6 +223,12 @@ function getMajorKeySignature(key) {
    return baseKeySignature;
 }
 
+/**
+ * Computes the Abc letter associated to a given note.
+ *
+ * @param {String} abcNote The note for which an Abc letter is requested.
+ * @result The abc letter associated with the given note.
+ */
 function getLetterAbc(abcNote) {
    if (abcNote.Octave >= 5) {
       return abcNote.Letter.toLowerCase();
@@ -182,6 +237,12 @@ function getLetterAbc(abcNote) {
    }
 }
 
+/**
+ * 
+ *
+ * @param {String} abcNote
+ * @result
+ */
 function getOctaveAbc(abcNote) {
    if (abcNote.Octave >= 6) {
       return "'".repeat(Math.abs(abcNote.Octave - 5));
@@ -192,12 +253,25 @@ function getOctaveAbc(abcNote) {
    }
 }
 
-//Checks if a pitch is an accidental note in the major mode of a key.
+/**
+ * Checks if a pitch is an accidental note in the major mode of a key.
+ *
+ * @param {String} relativeMajor
+ * @param {String} pitch
+ * @return True is the pitch is an accidental, false otherwise.
+ */
 function isAccidental(relativeMajor, pitch) {
    let tonicOffset = getEuclidianRemainder(pitch - getRelativeMidi(relativeMajor), 12);
    return ACCIDENTALS.includes(tonicOffset);
 }
 
+/**
+ *
+ *
+ * @param {String} abcNote
+ * @param {Boolean} useModifier
+ * @return
+ */
 function getAsAbc(abcNote, useModifier) {
    let modifier = "";
    if (useModifier) {
@@ -208,6 +282,12 @@ function getAsAbc(abcNote, useModifier) {
    return (modifier + letter + octave);
 }
 
+/**
+ *
+ *
+ * @param {String} abcNote
+ * @return
+ */
 function getModifierAbc(abcNote) {
    let modifierStr = "=";
    if (abcNote.Modifier > 0) {
@@ -218,6 +298,12 @@ function getModifierAbc(abcNote) {
    return modifierStr;
 }
 
+/**
+ * Retrieves the Abc character associated with a given key.
+ *
+ * @param {String} key The key.
+ * @return The Abc character associated with the given key.
+ */
 function getKeyAsAbc(key) {
    switch (key.Mode) {
       case -1:
@@ -229,6 +315,12 @@ function getKeyAsAbc(key) {
    }
 }
 
+/**
+ * Retrieves the Abc string associated with a given mode.
+ *
+ * @param {String} key The mode.
+ * @return The Abc string associated with the given mode.
+ */
 function getModeAsAbc(mode) {
    switch (mode) {
       case 0: //Ionian

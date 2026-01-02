@@ -133,6 +133,8 @@
          <div class="d-flex justify-content-center mx-auto my-2">
             <table class="w-auto table table-bordered" id="resultTable"></table>
          </div>
+         <!-- The following div is meant for debugging.
+              To activate it, change de value of the 'DEBUG_MODE' constant in the Javascript source code. -->
          <div class="collapse" id="debugDiv">
             <div>
                <h4 class="mt-3">Signal canvas</h4>
@@ -160,20 +162,24 @@
          </div>
       </div>
    </footer>
+   <!-- External libraries -->
    <script type="text/javascript" src="assets/aho-corasick/aho-corasick.js"></script>
    <script type="text/javascript" src="assets/als-wave-parser/wav-parser.js"></script>
    <script type="text/javascript" src="assets/fft/utils.js"></script>
    <script type="text/javascript" src="assets/fft/fft.js"></script>
+   <!-- Utilities -->
    <script type="text/javascript" src="assets/constants.js"></script>
    <script type="text/javascript" src="assets/tuneSearchClass.js"></script>
    <script type="text/javascript" src="assets/utils.js"></script>
    <script type="text/javascript" src="assets/locale.js"></script>
+   <!-- Services -->
    <script type="text/javascript" src="assets/resultService.js"></script>
    <script type="text/javascript" src="assets/tuneIndexService.js"></script>
    <script type="text/javascript" src="assets/toAbcConverter.js"></script>
    <script type="text/javascript" src="assets/processingService.js"></script>
    <script type="text/javascript" src="assets/importingService.js"></script>
    <script type="text/javascript" src="assets/recordingService.js"></script>
+   <!-- Controlers -->
    <script type="text/javascript" src="assets/controler.js"></script>
    <script type="text/javascript" src="assets/pageLoadTrigger.js"></script>
 </body>

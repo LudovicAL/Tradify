@@ -5,6 +5,12 @@ var micSource = null;
 var sampleRate = null;
 var audioSampleArray = null;
 
+/**
+ * Starts recording the ambient audio.
+ *
+ * @param {Function} onFinishedRecording The callback function to call when this method is finished executing.
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 async function startRecording(onFinishedRecording, tuneSearch) {
    console.log("Started: Start Recording");
    audioSampleArray = [];
@@ -38,6 +44,11 @@ async function startRecording(onFinishedRecording, tuneSearch) {
    console.log("Finished: Start recording");
 }
 
+/**
+ * Stops the recording of the ambient audio.
+ *
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 async function stopRecording(tuneSearch) {
    console.log("Started: Stop recording");
    let sampleRate = audioContext.sampleRate;

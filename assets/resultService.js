@@ -1,9 +1,11 @@
 var resultTable = document.getElementById("resultTable");
 
-function clearTable() {
-   resultTable.innerHTML = "";
-}
-
+/**
+ * Displays on the screen the result of a search.
+ *
+ * @param {Function} onFinishedDisplaying The callback function to call when this method is finished executing.
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 function startDisplaying(onFinishedDisplaying, tuneSearch) {
    console.log("Started: Result displaying");
    clearTable();
@@ -86,4 +88,11 @@ function startDisplaying(onFinishedDisplaying, tuneSearch) {
    }
    console.log("Finished: Result displaying");
    onFinishedDisplaying(tuneSearch);
+}
+
+/**
+ * Clears the result table of all its data.
+ */
+function clearTable() {
+   resultTable.innerHTML = "";
 }

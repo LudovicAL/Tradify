@@ -1,5 +1,12 @@
 var importedAudioSampleArray = null;
 
+/**
+ * Checks that the list of files submitted for import by the user contains exactly 1 element,
+ * and that this element is a wav.
+ *
+ * @param {List<File>} files The list of file submitted for import by the user.
+ * @return {Boolean} True if the submitted list is valid, false otherwise.
+ */
 function validateFile(files) {
    if (files.length > 1) {
       let errorMessage = getTranslation("tooManyImportedFiles", "Veuillez sélectionner un seul fichier.");
@@ -18,6 +25,13 @@ function validateFile(files) {
    return true;
 }
 
+/**
+ * Checks that the list of files submitted for import by the user contains exactly 1 element,
+ * and that this element is a wav.
+ *
+ * @param {Function} onFinishedImporting The callback function to call when this method is finished executing.
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 async function startImporting(onFinishedImporting, tuneSearch) {
    console.log("Started: Start Importing");
    importedAudioSampleArray = [];

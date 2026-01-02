@@ -1,24 +1,27 @@
-/*
-The tune index is a database in the form of a json object.
-It contains the informations on availables tunes (their id, contour, abc, ...).
-As to not overwhelm the server with repetitive pulls, it is cached on the client side
-and updated only every 28 days (provided the client has internet access).
-*/
+/**
+ * The tune index is a database in the form of a json object.
+ * It contains the informations on availables tunes (their id, contour, abc, ...).
+ * As to not overwhelm the server with repetitive pulls, it is cached on the client side
+ * and updated only every 28 days (provided the client has internet access).
+ */
 var tuneIndex;
 
-/*
-This function is called on page load, it loads the tune index.
-*/
+/**
+ * Fetches the tune index from the server.
+ * This function is automatically called on page load. 
+ */
 async function loadTuneIndex() {
    console.log("Started: Tune index retrieval");
    tuneIndex = await fetchJsonFile(TUNE_INDEX_URL, "tuneIndex", 28);
    console.log("Finished: Tune index retrieval");
 }
 
-/*
-This function is the gateway to tune searching.
-Provided with a contour string, it returns the best corresponding matches from the database.
-*/
+/**
+ * Displays on the screen the result of a search.
+ *
+ * @param {Function} onFinishedDisplaying The callback function to call when this method is finished executing.
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 function startSearching(onFinishedSearching, tuneSearch) {
    console.log("Started: Tune index searching");
    let secondSearchResult = [];
@@ -31,15 +34,19 @@ function startSearching(onFinishedSearching, tuneSearch) {
    onFinishedSearching(tuneSearch);
 }
 
-/*
-The first search in the database is fast, but inaccurate.
-It is good for eliminating many poor candidates.
-The algorithm it uses is called Aho-Corasick.
-To use it, one must first slice the contour string into small blocks we'll call nGrams.
-These nGrams are used to construct a new AhoCorasick object.
-The AhoCorasick object having been constructed, it can be used to score every tune of the database.
-The scored tunes are sorted, and then truncated so that only a subset of the best matches it kept.
-*/
+/**
+ * Searches the database for a list of good matches to the audio that was submitted.
+ * This first search is fast, but inaccurate.
+ * It is good for eliminating many poor candidates.
+ * The algorithm it uses is called Aho-Corasick.
+ * To use it, one must first slice the contour string into small blocks we'll call nGrams.
+ * These nGrams are used to construct a new AhoCorasick object.
+ * The AhoCorasick object having been constructed, it can be used to score every tune of the database.
+ * The scored tunes are sorted, and then truncated so that only a subset of the best matches it kept.
+ *
+ * @param {String} contourString A string representing the 'Contour' of the submitted audio.
+ * @param {List(Object)} A list of the tunes that best match the Contour sorted by their scores. This list could be empty.
+ */
 function performFirstSearch(contourString) {
    console.log("   Started: First search");
    //Slice the input into nGrams
@@ -63,10 +70,14 @@ function performFirstSearch(contourString) {
    return slicedTuneArray;
 }
 
-/*
-The second search in the database is slow, but accurate.
-The algorithm it uses is called Needleman-Wunsch.
-*/
+/**
+ * Searches the database for the best matches to the audio that was submitted, among an already filtered list of matches.
+ * This second search is slow, but accurate.
+ * The algorithm it uses is called Needleman-Wunsch.
+ *
+ * @param {String} contourString A string representing the 'Contour' of the submitted audio.
+ * @param {List<Object>} firstSearchResult An already filtered list of matches to the contourString.
+ */
 function performSecondSearch(contourString, firstSearchResult) {
    console.log("   Started: Second search");
    let rankedTuneArray = [];

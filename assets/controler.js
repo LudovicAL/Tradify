@@ -1,3 +1,18 @@
+/**
+ * The expected chain of events is as follow:
+ *    1- The user clicks the 'Record' or 'Import' button.
+ *    2- The onStartRecordingButtonClick() or onStartImportingButtonClick() function is triggered.
+ *       The currentStatus variable changes from IDLE to RECORDING or IMPORTING.
+ *    3- The onFinishedRecording() or onFinishedImporting() callback function is triggered.
+ *       The currentStatus variable changes from RECORDING or IMPORTING to PROCESSING.
+ *    4- The onFinishedProcessing() callback function is triggered.
+ *       The currentStatus variable changes from PROCESSING to SEARCHING.
+ *    5- The onFinishedSearching() callback function is triggered.
+ *       The currentStatus variable changes from SEARCHING to DISPLAYING.
+ *    6- The onFinishedDisplaying() callback function is triggered.
+ *       The currentStatus variable changes from DISPLAYING to IDLE.
+ */
+
 var startRecordingButton = document.getElementById("startRecordingButton");
 var startRecordingImage = document.getElementById("startRecordingImage");
 var importWavButton = document.getElementById("importWavButton");
@@ -6,6 +21,10 @@ var currentStatus = Status.IDLE;
 var recordingNumber = 0;
 var currentCogRotation = 0;
 
+/**
+ * Starts a new recording of the ambient audio.
+ * This method is triggered by the user when he clicks the 'Record' button.
+ */
 function onStartRecordingButtonClick() {
    if (currentStatus === Status.IDLE) {
       recordingNumber++;
@@ -17,6 +36,11 @@ function onStartRecordingButtonClick() {
    }
 }
 
+/**
+ * Callback function, called after a recording has been started.
+ *
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 function onFinishedRecording(tuneSearch) {
    if (currentStatus === Status.RECORDING && tuneSearch.recordingNumber === recordingNumber) {
       currentStatus = tuneSearch.setStatus(Status.PROCESSING);
@@ -29,7 +53,7 @@ function onFinishedRecording(tuneSearch) {
                currentStatus = tuneSearch.setStatus(Status.DISPLAYING);
                startDisplaying(onFinishedDisplaying, { rankedTunes: [] });
             } else {
-               rotateCogs();
+               rotateCog();
                startProcessing(onFinishedProcessing, result);
             }
          }
@@ -37,6 +61,12 @@ function onFinishedRecording(tuneSearch) {
    }
 }
 
+/**
+ * Starts the import of a wav file.
+ * This method is triggered by the user when he clicks the 'Import' button.
+ *
+ * @param {Event} event An Event object containing the file selected by the user for analysis.
+ */
 function onStartImporting(event) {
    if (currentStatus === Status.IDLE) {
       const files = event.target.files;
@@ -49,6 +79,11 @@ function onStartImporting(event) {
    }
 }
 
+/**
+ * Callback function, called after a wav file has been imported.
+ *
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 function onFinishedImporting(tuneSearch) {
    if (currentStatus === Status.IMPORTING && tuneSearch.recordingNumber === recordingNumber) {
       currentStatus = tuneSearch.setStatus(Status.PROCESSING);
@@ -59,12 +94,17 @@ function onFinishedImporting(tuneSearch) {
          currentStatus = tuneSearch.setStatus(Status.DISPLAYING);
          startDisplaying(onFinishedDisplaying, { rankedTunes: [] });
       } else {
-         rotateCogs();
+         rotateCog();
          startProcessing(onFinishedProcessing, tuneSearch);
       }
    }
 }
 
+/**
+ * Callback function, called after the recorded or imported audio has been processed.
+ *
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 function onFinishedProcessing(tuneSearch) {
    if (currentStatus === Status.PROCESSING && tuneSearch.recordingNumber === recordingNumber) {
       if (tuneSearch.contourString.length < 5) {
@@ -80,6 +120,11 @@ function onFinishedProcessing(tuneSearch) {
    }
 }
 
+/**
+ * Callback function, called after a search has finished to find correspondances in the tune index.
+ *
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 function onFinishedSearching(tuneSearch) {
    if (currentStatus === Status.SEARCHING && tuneSearch.recordingNumber === recordingNumber) {
       currentStatus = tuneSearch.setStatus(Status.DISPLAYING);
@@ -87,12 +132,21 @@ function onFinishedSearching(tuneSearch) {
    }
 }
 
+/**
+ * Callback function, called after the result of a search has been displayed on the screen for the user.
+ *
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 function onFinishedDisplaying(tuneSearch) {
    if (currentStatus === Status.DISPLAYING && tuneSearch.recordingNumber === recordingNumber) {
       currentStatus = tuneSearch.setStatus(Status.IDLE);
    }
 }
 
+/**
+ * Jitters the 'Record' button as long as the current status is 'RECORDING'.
+ * This is meant as to give the user some feedback, indicating the app is performing a task.
+ */
 async function jitterButton() {
    if (currentStatus === Status.RECORDING) {
       startRecordingImage.src = "icons/Recording.svg";
@@ -104,13 +158,17 @@ async function jitterButton() {
    }
 }
 
-function rotateCogs() {
+/**
+ * Animates a cog in a circling manner as long as the current status is 'PROCESSING', 'SEARCHING' or 'DISPLAYING'.
+ * This is meant as to give the user some feedback, indicating the app is performing a task.
+ */
+function rotateCog() {
    if (currentStatus === Status.PROCESSING || currentStatus === Status.SEARCHING || currentStatus === Status.DISPLAYING) {
       startRecordingButton.disabled = true;
       startRecordingImage.src = "icons/Cog.svg";
       currentCogRotation = (currentCogRotation + 1) % 360;
       startRecordingButton.style.transform = `rotate(${currentCogRotation}deg)`;
-      window.requestAnimationFrame(rotateCogs);
+      window.requestAnimationFrame(rotateCog);
    } else {
       startRecordingButton.disabled = false;
       startRecordingImage.src = "icons/Idle.svg";
@@ -126,7 +184,6 @@ importWavButton.onclick = function() {
 hiddenFilePicker.addEventListener('change', (event) => {
    onStartImporting(event);
 });
-
 if (DEBUG_MODE) {
    document.getElementById("debugDiv").classList.remove("collapse");;
 }

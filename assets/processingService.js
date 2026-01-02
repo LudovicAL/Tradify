@@ -1,15 +1,17 @@
 var interpolationIndices = null;
 
-/*
-This function is the gateway to audio processing.
-It works by:
-1- Applying the Fast Fourier Transform algorithm to the data
-2- Eliminating noise by keeping only frequencies of peek intensity
-3- Eliminating short burst of sound, keeping only longer burst
-*/
+/**
+ * Starts processing the recorded or imported audio in order to produce a 'Contour'.
+ * It works by:
+ * 1- Applying the Fast Fourier Transform algorithm to the data.
+ * 2- Eliminating noise by keeping only frequencies of peek intensity.
+ * 3- Eliminating short bursts of sound, keeping only longer bursts.
+ *
+ * @param {Function} onFinishedProcessing The callback function to call when this method is finished executing.
+ * @param {TuneSearch} tuneSearch An object containing the details of the current search.
+ */
 function startProcessing(onFinishedProcessing, tuneSearch) {
    console.log("Started: Audio processing");
-   //Applying a the Fast Fourier Transform algorithm to the data
    let windowFrameArray = computeWindowFrame(tuneSearch.audioSampleArray, tuneSearch.sampleRate);
    //Eliminating noise by keeping only frequencies of peek intensity
    let latticeArray = computeLattice(windowFrameArray);
@@ -26,6 +28,13 @@ function startProcessing(onFinishedProcessing, tuneSearch) {
    onFinishedProcessing(tuneSearch);
 }
 
+/**
+ * Converts the frequency of the signal from the time domain (how it changes over time) to the frequency domain (its constituent frequencies).
+ *
+ * @param {List<float>} audioSampleArray The signal submitted for analysis.
+ * @param {int} sampleRate The sample rate of the recording.
+ * @return The computed list of Winfow Frame.
+ */
 function computeWindowFrame(audioSampleArray, sampleRate) {
    console.log("   Started: Window frame computing");
    let windowFrameArray = new Array(audioSampleArray.length);
@@ -39,34 +48,36 @@ function computeWindowFrame(audioSampleArray, sampleRate) {
    return windowFrameArray;
 }
 
+/**
+ * Converts the frequency of a piece of the signal from the time domain (how it changes over time) to the frequency domain (its constituent frequencies).
+ *
+ * @param {float} audioSample A piece of the signal submitted for analysis.
+ * @param {int} sampleRate The sample rate of the recording.
+ * @return The converted signal.
+ */
 function processAudioSample(audioSample, sampleRate) {
    //Apply Blackman Window Function
    let blackmanWindow = getBlackmanWindow();
    for (let i = 0; i < WINDOW_SIZE; i++) {
       audioSample[i] *= blackmanWindow[i];
    }
-   
    //Apply Fast Fourier Transform (FFT)
    let fftSignal = {"real": new Array(WINDOW_SIZE)};
    for (let i = 0; i < WINDOW_SIZE; i++) {
       fftSignal.real[i] = audioSample[i]; //Using this library: https://www.jsdelivr.com/package/npm/fftjs
    }
    let fftResult1 = fft(fftSignal);
-   
    //Compute K value
    for (let i = 0; i < WINDOW_SIZE; i++) {
       fftResult1.real[i] = Math.pow((Math.pow(fftResult1.real[i], 2) + Math.pow(fftResult1.imag[i], 2)), 1.0/6.0);
       fftResult1.imag[i] = 0.0;
    }
-
    //Apply Fast Fourier Transform (FFT)
    let fftResult2 = fft(fftResult1); //Using this library: https://www.jsdelivr.com/package/npm/fftjs
-   
    //Apply peak pruning
    for (let i = 0; i < WINDOW_SIZE; i++) {
       fftResult2.real[i] = Math.max(0, fftResult2.real[i]);
    }
-   
    //Use linear interpolation to find the energy at the frequencies of each of the MIDI notes in the range of MIDI values this app uses.
    if (!interpolationIndices) {
       computeInterpolationIndices(sampleRate);
@@ -80,7 +91,6 @@ function processAudioSample(audioSample, sampleRate) {
       let feature = highWaveletTransform * highAlternatingCurrent + lowWaveletTransform * lowAlternatingCurrent;
       windowFrame[Math.trunc(i / BINS_PER_MIDI)] += feature;
    }
-   
    //Fix octaves
    for (let i = 0; i < 12; i++) {
       let ind = i;
@@ -98,7 +108,6 @@ function processAudioSample(audioSample, sampleRate) {
          }
       }
    }
-   
    //Apply noise filtering
    let sortedWindowFrame = windowFrame.slice().sort((a, b) => b - a);
    let threshold = sortedWindowFrame[4];
@@ -110,6 +119,11 @@ function processAudioSample(audioSample, sampleRate) {
    return windowFrame;
 }
 
+/**
+ * Computes the interpolation indices.
+ *
+ * @param {int} sampleRate The sample rate of the recording.
+ */
 function computeInterpolationIndices(sampleRate) {
    let acBinMidis = new Array(HALF_WINDOW_SIZE);
    for (let i = 0; i < HALF_WINDOW_SIZE; i++) {
@@ -146,6 +160,12 @@ function computeInterpolationIndices(sampleRate) {
    }
 }
 
+/**
+ * Computes the lattice.
+ *
+ * @param {List<float>} windowFrameArray The converted signal.
+ * @return The lattice path backtrace.
+ */
 function computeLattice(windowFrameArray) {
    console.log("   Started: Lattice computing");
    //Compute energy by frame
@@ -202,6 +222,12 @@ function computeLattice(windowFrameArray) {
    return latticePathBacktraceArray;
 }
 
+/**
+ * Computes the score of an interval.
+ *
+ * @param {int} The interval for which a score is to be computed.
+ * @return The computed score.
+ */
 function getIntervalScore(interval) {
    if (interval === 0) {
       return BASE_ENERGY_SCORE;
@@ -214,6 +240,14 @@ function getIntervalScore(interval) {
    }
 }
 
+/**
+ * Computes the 'Contour' of the submitted audio.
+ *
+ * @param {List<float>} windowFrameArray
+ * @param {List<float>} latticeArray
+ * @param {int} sampleRate The sample rate of the recording.
+ * @return The 'Contour' of the submitted audio.
+ */
 function computeContour(windowFrameArray, latticeArray, sampleRate) {
    console.log("   Started: Contour computing");
    //Compute notes from lattice
@@ -250,7 +284,7 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
    let bestTempoScore = -Infinity;
    let bestTempoQuantisedNoteArray = null;
    for (let i = LOW_BPM; i < HIGH_BPM; i += 5) {
-      let framesPerQuaver = bpmToNumFrame(i, sampleRate);
+      let framesPerQuaver = bpmToNumberOfFrames(i, sampleRate);
       let quantisedNotesArray = quantiseNotes(noteArray, framesPerQuaver);
       let score = scoreQuantisedNotes(quantisedNotesArray, noteArray, framesPerQuaver);
       if (score > bestTempoScore) {
@@ -290,17 +324,37 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
    return contourString;
 }
 
+/**
+ * Computes the pitch of an indice in a lattice.
+ *
+ * @param {int} latticeIndice The indice for which the pitch is to be computed.
+ * @return The pitch of the indice.
+ */
 function latticeIndiceToPich(latticeIndice) {
    return MIDI_LOW + latticeIndice;
 }
 
-function bpmToNumFrame(bpm, sampleRate) {
+/**
+ * Computes the number of frames for a given number of beat per minute.
+ *
+ * @param {int} bpm The given number of beat per minute.
+ * @param {int} sampleRate The sample rate of the recording.
+ * @return The computed number of frames.
+ */
+function bpmToNumberOfFrames(bpm, sampleRate) {
    let bps = bpm / 60.0;
    let quaversPerSecond = bps * 2.0;
    let framesPerSecond = sampleRate / WINDOW_SIZE;
    return framesPerSecond / quaversPerSecond;
 }
 
+/**
+ * Quantises notes.
+ *
+ * @param {List<float>} noteArray
+ * @param {List<int>} framesPerQuaver
+ * @return 
+ */
 function quantiseNotes(noteArray, framesPerQuaver) {
    let quantisedNotesArray = new Array(noteArray.length);
    for (let i = 0, max = noteArray.length; i < max; i++) {
@@ -318,6 +372,14 @@ function quantiseNotes(noteArray, framesPerQuaver) {
    return quantisedNotesArray;
 }
 
+/**
+ * Score quantised notes.
+ *
+ * @param {List<float>} quantisedNotesArray
+ * @param {List<float>} noteArray
+ * @param {List<int>} framesPerQuaver
+ * @return 
+ */
 function scoreQuantisedNotes(quantisedNotesArray, noteArray, framesPerQuaver) {
    //Compute number of frames
    let numInputFrames = 0.0;
