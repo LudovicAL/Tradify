@@ -104,7 +104,7 @@ function performSecondSearch(contourString, firstSearchResult) {
       //    bN
       let lastRow = new Array(a.length + 1).fill(0);
       let lastColumnIndex = a.length;
-      for (let row in b) {
+      for (let row of b) {
          let previousDiagonal = 0;
          for (let col = 1, maxCol = lastRow.length; col < maxCol; col++) {
             let currentDiagonal = previousDiagonal;

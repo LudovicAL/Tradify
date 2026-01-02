@@ -67,7 +67,7 @@ function drawArrayOnCanvas(canvasName, dataArray, widthMagnification) {
    canvasContext.fillRect(0, 0, width, height);
    //Draw on the canvas
    canvasContext.fillStyle = "rgb(0, 0, 0)";
-   for (let dataPoint in dataArray) {
+   for (let dataPoint of dataArray) {
       canvasContext.fillRect(i * widthMagnification, height - dataPoint * heightMagnification, widthMagnification, heightMagnification);
    }
 }
