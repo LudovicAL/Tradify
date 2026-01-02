@@ -104,13 +104,13 @@ function performSecondSearch(contourString, firstSearchResult) {
       //    bN
       let lastRow = new Array(a.length + 1).fill(0);
       let lastColumnIndex = a.length;
-      for (let row = 0, maxRow = b.length; row < maxRow; row++) {
+      for (let row of b) {
          let previousDiagonal = 0;
          for (let col = 1, maxCol = lastRow.length; col < maxCol; col++) {
             let currentDiagonal = previousDiagonal;
             previousDiagonal = lastRow[col];
             lastRow[col] = Math.max(
-                  currentDiagonal + ((a[col-1] === b[row]) ? MATCH_SCORE : MISMATCH_SCORE),
+                  currentDiagonal + ((a[col-1] === row) ? MATCH_SCORE : MISMATCH_SCORE),
                   Math.max(
                      lastRow[col - 1] + GAP_SCORE, 
                      lastRow[col] + GAP_SCORE
