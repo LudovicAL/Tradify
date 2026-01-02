@@ -185,7 +185,7 @@ function computeLattice(windowFrameArray) {
    }
    //Normalise data
    let normal = windowFrameArray.length / totalEnergy;
-   for (let windowFrame in windowFrameArray) {
+   for (let windowFrame of windowFrameArray) {
       for (let j = 0; j < MIDI_NUM; j++) {
          windowFrame[j] *= normal; 
       }
@@ -306,8 +306,8 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
    let decisionIndex = Math.round(contourArrayClone.length * (1.0 - SHRILL_THRESHOLD_ENERGY));
    if (contourArrayClone[decisionIndex] >= SHRILL_THRESHOLD_PITCH) {
       for (let i = 0, max = contourArray.length; i < max; i++) {
-         if (contourArray > (MIDI_LOW + 12)) {
-            contourArray -= 12;
+         if (contourArray[i] > (MIDI_LOW + 12)) {
+            contourArray[i] -= 12;
          }
       }
    }
