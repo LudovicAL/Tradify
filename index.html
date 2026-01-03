@@ -4,6 +4,7 @@
 <head>
    <title data-i18n-key="title">Tradify</title>
    <meta charset="utf-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="icon" type="image/png" href="icons/favicon.ico">
    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
@@ -19,143 +20,144 @@
 <body class="d-flex flex-column h-100">
    <noscript data-i18n-key="noscript">Veuillez activer Javascript dans votre navigateur pour faire fonctionner cette page.</noscript>
    <div class="container m-5">
-      <div class="container ml-5">
-         <div class="d-flex justify-content-between">
-            <button data-i18n-key="about" type="button" class="btn btn-dark" data-bs-toggle="collapse" data-bs-target="#aboutCollapsed">À propos</button>
-            <select data-i18n-switcher class="form-select w-auto focus-ring" style="--bs-focus-ring-color: rgba(var(--bs-emphasis-color-rgb), 1.0);" aria-label="Dropdown menu for langage selection" id="langage-selection">
-               <option value="fr" selected>fr</option>
-               <option value="en">en</option>
-            </select>
-         </div>
-         <div class="d-flex justify-content-center">
-            <img src="icons/Title.png" alt="Tradify" class="img-fluid" style="height:100px">
-         </div>
-         <div id="aboutCollapsed" class="collapse mt-3 p-4 bg-light rounded">
-            <p data-i18n-key="lead">
-               Cette application permet d'identifier des pièces de musique traditionnelles québécoises et irlandaises et d'en récupérer les partitions.
-               Elle est fortement inspirée du travail de Tom Willy (<a href="https://folkfriend.app/" target="_blank">FolkFriend</a>).
-            </p>
+      <div class="d-flex justify-content-between row-cols-auto">
+         <button data-i18n-key="about" type="button" class="btn btn-dark" data-bs-toggle="collapse" data-bs-target="#aboutCollapsed">À propos</button>
+         <select data-i18n-switcher class="form-select w-auto focus-ring" style="--bs-focus-ring-color: rgba(var(--bs-emphasis-color-rgb), 1.0);" aria-label="Dropdown menu for langage selection" id="langage-selection">
+            <option value="fr" selected>fr</option>
+            <option value="en">en</option>
+         </select>
+      </div>
+      <div class="d-flex justify-content-center">
+         <img src="icons/Title.png" alt="Tradify" class="img-fluid" style="height:100px">
+      </div>
+      <div id="aboutCollapsed" class="collapse mt-3 p-4 bg-light rounded">
+         <p data-i18n-key="lead">
+            Cette application permet d'identifier des pièces de musique traditionnelles québécoises et irlandaises et d'en récupérer les partitions.
+            Elle est fortement inspirée du travail de Tom Willy (<a href="https://folkfriend.app/" target="_blank">FolkFriend</a>).
+         </p>
+         <div class="row justify-content-between row-cols-auto">
             <a data-i18n-key="download" href="https://github.com/LudovicAL/Partitions/archive/refs/heads/main.zip" class="btn btn-success mb-3" role="button">Télécharger les partitions au format ZIP</a>
-            <h4 data-i18n-key="links">Liens utiles</h4>
-            <div class="container d-flex flex-wrap">
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="repositoryTitle" class="card-title">Dépôt Github</h5>
-                     <p data-i18n-key="repositoryDescription" class="card-text">Mon dépôt de partitions trad québécoises et irlandaises.</p>
-                     <a data-i18n-key="followLink" href="https://ludovical.github.io/Partitions/" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            <a data-i18n-key="feedback" href="mailto:ludovicaubut@hotmail.com" class="btn btn-warning mb-3" role="button">Communiquer avec Tradify</a>
+         </div>
+         <h4 data-i18n-key="links">Liens utiles</h4>
+         <div class="container d-flex flex-wrap">
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="repositoryTitle" class="card-title">Dépôt Github</h5>
+                  <p data-i18n-key="repositoryDescription" class="card-text">Mon dépôt de partitions trad québécoises et irlandaises.</p>
+                  <a data-i18n-key="followLink" href="https://ludovical.github.io/Partitions/" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="folksetTitle" class="card-title">FolkSets</h5>
-                     <p data-i18n-key="folksetDescription" class="card-text">Le dépôt Github de mon projet de liseuse de partitions pour appareils Android.</p>
-                     <a data-i18n-key="followLink" href="https://github.com/LudovicAL/FolkSets" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="folksetTitle" class="card-title">FolkSets</h5>
+                  <p data-i18n-key="folksetDescription" class="card-text">Le dépôt Github de mon projet de liseuse de partitions pour appareils Android.</p>
+                  <a data-i18n-key="followLink" href="https://github.com/LudovicAL/FolkSets" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="musescoreTitle" class="card-title">Musescore</h5>
-                     <p data-i18n-key="musescoreDescription" class="card-text">Une application permettant de mettre en page vos partitions.</p>
-                     <a data-i18n-key="followLink" href="https://musescore.com/" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="musescoreTitle" class="card-title">Musescore</h5>
+                  <p data-i18n-key="musescoreDescription" class="card-text">Une application permettant de mettre en page vos partitions.</p>
+                  <a data-i18n-key="followLink" href="https://musescore.com/" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="folkFriendTitle" class="card-title">FolkFriend</h5>
-                     <p data-i18n-key="folkFriendDescription" class="card-text">FolkFriend écoute votre musique et cherche des correspondances dans la base de données de The Session.</p>
-                     <a data-i18n-key="followLink" href="https://folkfriend.app/" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="folkFriendTitle" class="card-title">FolkFriend</h5>
+                  <p data-i18n-key="folkFriendDescription" class="card-text">FolkFriend écoute votre musique et cherche des correspondances dans la base de données de The Session.</p>
+                  <a data-i18n-key="followLink" href="https://folkfriend.app/" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="thesessionTitle" class="card-title">The Session</h5>
-                     <p data-i18n-key="thesessionDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle irlandaise.</p>
-                     <a data-i18n-key="followLink" href="https://thesession.org/" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="thesessionTitle" class="card-title">The Session</h5>
+                  <p data-i18n-key="thesessionDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle irlandaise.</p>
+                  <a data-i18n-key="followLink" href="https://thesession.org/" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="montrealsessionTitle" class="card-title">Montreal Session</h5>
-                     <p data-i18n-key="montrealsessionDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle irlandaise à Montréal.</p>
-                     <a data-i18n-key="followLink" href="https://www.montrealsession.ca/" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="montrealsessionTitle" class="card-title">Montreal Session</h5>
+                  <p data-i18n-key="montrealsessionDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle irlandaise à Montréal.</p>
+                  <a data-i18n-key="followLink" href="https://www.montrealsession.ca/" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="vitrifolkTitle" class="card-title">Vitrifolk</h5>
-                     <p data-i18n-key="vitrifolkDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle canadienne.</p>
-                     <a data-i18n-key="followLink" href="https://www.vitrifolk.fr/partitions/partitions-canada.html" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="vitrifolkTitle" class="card-title">Vitrifolk</h5>
+                  <p data-i18n-key="vitrifolkDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle canadienne.</p>
+                  <a data-i18n-key="followLink" href="https://www.vitrifolk.fr/partitions/partitions-canada.html" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="familleremonTitle" class="card-title">Famille Remon</h5>
-                     <p data-i18n-key="familleremonDescription" class="card-text">Le dépôt de partitions de la famille Remon.</p>
-                     <a data-i18n-key="followLink" href="https://lietteremon.com/archives-familiales/airs/" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="familleremonTitle" class="card-title">Famille Remon</h5>
+                  <p data-i18n-key="familleremonDescription" class="card-text">Le dépôt de partitions de la famille Remon.</p>
+                  <a data-i18n-key="followLink" href="https://lietteremon.com/archives-familiales/airs/" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="leviolondejosTitle" class="card-title">Le violon de Jos</h5>
-                     <p data-i18n-key="leviolondejosDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle québécoise.</p>
-                     <a data-i18n-key="followLink" href="https://leviolondejos.wiki/index.php/Morceaux" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="leviolondejosTitle" class="card-title">Le violon de Jos</h5>
+                  <p data-i18n-key="leviolondejosDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle québécoise.</p>
+                  <a data-i18n-key="followLink" href="https://leviolondejos.wiki/index.php/Morceaux" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="tunearchTitle" class="card-title">Tune Arch</h5>
-                     <p data-i18n-key="tunearchDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle.</p>
-                     <a data-i18n-key="followLink" href="https://tunearch.org/" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="tunearchTitle" class="card-title">Tune Arch</h5>
+                  <p data-i18n-key="tunearchDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle.</p>
+                  <a data-i18n-key="followLink" href="https://tunearch.org/" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
-               <div class="card m-1" style="width: 18rem;">
-                  <div class="card-body">
-                     <h5 data-i18n-key="folktunefinderTitle" class="card-title">Folk Tune Finder</h5>
-                     <p data-i18n-key="folktunefinderDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle.</p>
-                     <a data-i18n-key="followLink" href="https://www.folktunefinder.com/" class="btn btn-primary" target="_blank">Y aller</a>
-                  </div>
+            </div>
+            <div class="card m-1" style="width: 18rem;">
+               <div class="card-body">
+                  <h5 data-i18n-key="folktunefinderTitle" class="card-title">Folk Tune Finder</h5>
+                  <p data-i18n-key="folktunefinderDescription" class="card-text">Un dépôt de partitions pour la musique traditionnelle.</p>
+                  <a data-i18n-key="followLink" href="https://www.folktunefinder.com/" class="btn btn-primary" target="_blank">Y aller</a>
                </div>
             </div>
          </div>
-         <div class="d-flex justify-content-center">
-            <button type="button" class="btn border-0" id="startRecordingButton">
-               <img src="icons/Idle.svg" alt="Record" class="img-fluid" style="height:300px" id="startRecordingImage">
-            </button>
-         </div>
-         <!-- Hello there, glad you are looking at my code!
-              Importing WAV is an experimental functionality.
-              To try it, remove 'd-none' from the class list of the following DIV element.
-              A new button will appear on the web page. -->
-         <div class="d-flex justify-content-center d-none">
-            <button data-i18n-key="importWav" id="importWavButton" type="button" class="btn btn-dark">Importez un Wav</button>
-            <input class="form-control d-none" type="file" id="hiddenFilePicker" accept="audio/wav">
-         </div>
-         <div class="d-flex justify-content-center mx-auto my-2">
-            <table class="w-auto table table-bordered" id="resultTable"></table>
-         </div>
-         <!-- The following div is meant for debugging.
-              To activate it, change de value of the 'DEBUG_MODE' constant in the Javascript source code. -->
-         <div class="collapse" id="debugDiv">
-            <div>
-               <h4 class="mt-3">Signal canvas</h4>
-               <canvas class="border" id="signalCanvas"></canvas>
-               <h4 class="mt-3">Lattice canvas</h4>
-               <canvas class="border" id="latticeCanvas"></canvas>
-               <h4 class="mt-3">Contour canvas</h4>
-               <canvas class="border" id="contourCanvas"></canvas>
-            </div>
+      </div>
+      <div class="d-flex justify-content-center">
+         <button type="button" class="btn border-0" id="startRecordingButton">
+            <img src="icons/Idle.svg" alt="Record" class="img-fluid" style="height:300px" id="startRecordingImage">
+         </button>
+      </div>
+      <!-- Hello there, glad you are looking at my code!
+           Importing WAV is an experimental functionality.
+           To try it, remove 'd-none' from the class list of the following DIV element.
+           A new button will appear on the web page. -->
+      <div class="d-flex justify-content-center d-none">
+         <button data-i18n-key="importWav" id="importWavButton" type="button" class="btn btn-dark">Importez un Wav</button>
+         <input class="form-control d-none" type="file" id="hiddenFilePicker" accept="audio/wav">
+      </div>
+      <div class="d-flex justify-content-center mx-auto my-2">
+         <table class="w-auto table table-bordered" id="resultTable"></table>
+      </div>
+      <!-- The following div is meant for debugging.
+           To activate it, change de value of the 'DEBUG_MODE' constant in the Javascript source code. -->
+      <div class="collapse" id="debugDiv">
+         <div>
+            <h4 class="mt-3">Signal canvas</h4>
+            <canvas class="border" id="signalCanvas"></canvas>
+            <h4 class="mt-3">Lattice canvas</h4>
+            <canvas class="border" id="latticeCanvas"></canvas>
+            <h4 class="mt-3">Contour canvas</h4>
+            <canvas class="border" id="contourCanvas"></canvas>
          </div>
       </div>
    </div>
    <footer class="footer mt-auto py-3 bg-light">
-      <div class="container">
-         <div class="row">
-            <small data-i18n-key="footer" class="col-auto text-muted align-self-center">Adapté du travail de Tom Wyllie (<a href="https://folkfriend.app/" target="_blank">FolkFriend</a>) par Ludovic A.-Lussier.</small>
-            <div class="d-flex justify-content-end col">
+      <div class="container mx-5">
+         <div class="row justify-content-between row-cols-auto">
+            <small data-i18n-key="footer" class="text-muted align-self-center">Adapté du travail de Tom Wyllie (<a href="https://folkfriend.app/" target="_blank">FolkFriend</a>) par Ludovic A.-Lussier.</small>
+            <div class="d-flex justify-content-end">
                <a href="https://buymeacoffee.com/ludovical" class="rounded-3 border border-2 p-2 text-reset text-decoration-none fs-5 align-self-center" title="Buy me a coffee" target="_blank">
-                  <div class="row px-3">
-                     <img src="icons/BuyMeACoffee.svg" alt="Buy me a coffee" class="img-fluid col align-self-center p-0" style="height:35px">
-                     <div data-i18n-key="buymeacoffee" class="col-auto align-self-center fw-bolder p-0">Achetez-moi un café</div>
+                  <div class="row px-3 row-cols-auto">
+                     <img src="icons/BuyMeACoffee.svg" alt="Buy me a coffee" class="img-fluid align-self-center p-0" style="height:35px">
+                     <div data-i18n-key="buymeacoffee" class="align-self-center fw-bolder p-0">Achetez-moi un café</div>
                   </div>
                </a>
             </div>
