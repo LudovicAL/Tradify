@@ -66,9 +66,15 @@ function supportedOrDefault(locales) {
  * @return A list of the prefered locales of the client.
  */
 function browserLocales(languageCodeOnly = false) {
-   return navigator.languages.map((locale) => {
-      languageCodeOnly ? locale.split("-")[0] : locale;
-   });
+   let browserLocaleArray = [];
+   for (const locale of navigator.languages) {
+      if (languageCodeOnly) {
+         browserLocaleArray.push(locale.split("-")[0]);
+      } else {
+         browserLocaleArray.push(locale);
+      }
+   }
+   return browserLocaleArray;
 }
 
 /**

@@ -2,9 +2,10 @@ var localeLoaded = false;
 
 document.addEventListener("DOMContentLoaded", async () => {
    console.log("Started: Locale retrieval");
-   const initialLocale = supportedOrDefault(browserLocales(true));
-   await setLocale(DEFAULT_LOCALE);
-   bindLocaleSwitcher(DEFAULT_LOCALE);
+   const browserLocalesArray = browserLocales(true);
+   const initialLocale = supportedOrDefault(browserLocalesArray);
+   await setLocale(initialLocale);
+   bindLocaleSwitcher(initialLocale);
    localeLoaded = true;
    console.log("Finished: Locale retrieval");
 });
