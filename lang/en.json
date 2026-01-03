@@ -31,14 +31,14 @@
    "folktunefinderDescription": "A repository of sheet music for traditional music.",
    "importWav": "Import a Wav",
    "tooManyImportedFiles": "Please select only 1 file.",
-   "notAWav": "Please select a file of type Wav.",
+   "notAWav": "Please select a Wav file.",
    "footer": "Adapted from the work of Tom Wyllie (FolkFriend) by Ludovic A.-Lussier.",
    "Rank": "Rank",
    "Title": "Title",
    "Score": "Score",
    "userMediaNotSupported": "Your browser does not support this application. Please change browser.",
-   "insufficentDataForAnalysis": "The recorded data is insufficent to proceed further with analysis. You may be playing your music too softly.",
-   "insufficentDataForSearch": "The recorded data is insufficent to proceed further with the search. You may be playing your music too softly.",
-   "zeroResult": "0 result. Try again!",
+   "insufficentDataForAnalysis": "The recorded data is insufficent to proceed further with the analysis. You may be playing your music too quietly.",
+   "insufficentDataForSearch": "The recorded data is insufficent to proceed further with the search. You may be playing your music too quietly.",
+   "zeroResult": "0 results. Try again!",
    "buymeacoffee": "Buy me a coffee"
 }
