@@ -7,10 +7,10 @@ function getBlackmanWindow() {
    let a0 = 7938.0 / 18608.0;
    let a1 = 9240.0 / 18608.0;
    let a2 = 1430.0 / 18608.0;
-   let blackmanWindow = new Array(WINDOW_SIZE);
+   let blackmanWindow = [];
    let size = (WINDOW_SIZE - 1);
    for (let i = 0; i < WINDOW_SIZE; i++) {
-      blackmanWindow[i] = a0 - a1 * Math.cos(2.0 * Math.PI * i / size) + a2 * Math.cos(4.0 * Math.PI * i / size);
+      blackmanWindow.push(a0 - a1 * Math.cos(2.0 * Math.PI * i / size) + a2 * Math.cos(4.0 * Math.PI * i / size));
    }
    return blackmanWindow;
 }
@@ -67,8 +67,8 @@ function drawArrayOnCanvas(canvasName, dataArray, widthMagnification) {
    canvasContext.fillRect(0, 0, width, height);
    //Draw on the canvas
    canvasContext.fillStyle = "rgb(0, 0, 0)";
-   for (let dataPoint of dataArray) {
-      canvasContext.fillRect(i * widthMagnification, height - dataPoint * heightMagnification, widthMagnification, heightMagnification);
+   for (let i = 0, max = dataArray.length; i < max; i++) {
+      canvasContext.fillRect(i * widthMagnification, height - dataArray[i] * heightMagnification, widthMagnification, heightMagnification);
    }
 }
 

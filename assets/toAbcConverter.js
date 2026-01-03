@@ -170,7 +170,7 @@ function getAbcVocabulary(key) {
    let keySignature = getMajorKeySignature(key);
    let chromaticScale = [];
    let letterOffset = SCALE_LETTERS.indexOf(key.Letter);
-   for (let scaleModifier of SCALE_MODIFIER) {
+   for (let scaleModifier of SCALE_MODIFIERS) {
       let offset = letterOffset + scaleModifier.TonicOffset;
       offset %= SCALE_LETTERS.length;
       let letter = SCALE_LETTERS[offset];

@@ -62,9 +62,9 @@ function processAudioSample(audioSample, sampleRate) {
       audioSample[i] *= blackmanWindow[i];
    }
    //Apply Fast Fourier Transform (FFT)
-   let fftSignal = {"real": new Array(WINDOW_SIZE)};
+   let fftSignal = {"real": []};
    for (let i = 0; i < WINDOW_SIZE; i++) {
-      fftSignal.real[i] = audioSample[i]; //Using this library: https://www.jsdelivr.com/package/npm/fftjs
+      fftSignal.real.push(audioSample[i]); //Using this library: https://www.jsdelivr.com/package/npm/fftjs
    }
    let fftResult1 = fft(fftSignal);
    //Compute K value
@@ -125,17 +125,17 @@ function processAudioSample(audioSample, sampleRate) {
  * @param {int} sampleRate The sample rate of the recording.
  */
 function computeInterpolationIndices(sampleRate) {
-   let acBinMidis = new Array(HALF_WINDOW_SIZE);
+   let acBinMidis = [];
    for (let i = 0; i < HALF_WINDOW_SIZE; i++) {
       let acFrequency = sampleRate / (i + 1);
       let acMidi = 69 + (12 * Math.log2(acFrequency / 440)); //Formula for hertz to Midi
-      acBinMidis[i] = acMidi;
+      acBinMidis.push(acMidi);
    }
    if (acBinMidis[0] < MIDI_HIGH || acBinMidis[HALF_WINDOW_SIZE - 1] > MIDI_LOW) {
       alert("Spectrogram range is insufficient. Has an invalid sample rate been used?");
       throw "Spectrogram range is insufficient. Has an invalid sample rate been used?";
    }
-   interpolationIndices = new Array(BINS_NUM);
+   interpolationIndices = [];
    //Compute lowest MIDI value
    let edge = Math.floor(BINS_PER_MIDI / 2) / BINS_PER_MIDI;
    let lowMidi = MIDI_LOW - edge;
@@ -156,7 +156,7 @@ function computeInterpolationIndices(sampleRate) {
          alert("Invalid x1: " + w1 + ", x2: " + w2);
          throw "Invalid x1: " + w1 + ", x2: " + w2;
       }
-      interpolationIndices[i] = { hi_weight: w1, lo_weight: w2, hi_index: (hi + 1) };      
+      interpolationIndices.push({ hi_weight: w1, lo_weight: w2, hi_index: (hi + 1) });
    }
 }
 
@@ -169,14 +169,14 @@ function computeInterpolationIndices(sampleRate) {
 function computeLattice(windowFrameArray) {
    console.log("   Started: Lattice computing");
    //Compute energy by frame
-   let energyByFrameArray = new Array(windowFrameArray.length);
+   let energyByFrameArray = [];
    let totalEnergy = 0;
    for (let i = 0, max = windowFrameArray.length; i < max; i++) {
       let frameTotalEnergy = 0;
       for (let j = 0; j < MIDI_NUM; j++) {
          frameTotalEnergy += windowFrameArray[i][j];
       }
-      energyByFrameArray[i] = frameTotalEnergy;
+      energyByFrameArray.push(frameTotalEnergy);
       totalEnergy += frameTotalEnergy;
    }
    if (totalEnergy === 0) {
@@ -191,8 +191,8 @@ function computeLattice(windowFrameArray) {
       }
    }
    //Retain only the optimal path from the start to each pitch
-   let latticeScoreArray = new Array(windowFrameArray.length);
-   latticeScoreArray[0] = windowFrameArray[0];
+   let latticeScoreArray = [];
+   latticeScoreArray.push(windowFrameArray[0]);
    for (let i = 1, max = windowFrameArray.length; i < max; i++) {
       let nextScoreArray = new Array(MIDI_NUM).fill(-Infinity);
       for (let j = 0; j < MIDI_NUM; j++) {
@@ -207,13 +207,13 @@ function computeLattice(windowFrameArray) {
             }
          }
       }
-      latticeScoreArray[i] = nextScoreArray;
+      latticeScoreArray.push(nextScoreArray);
    }
    //Retrace through lattice
-   let latticePathBacktraceArray = new Array(windowFrameArray.length);
+   let latticePathBacktraceArray = [];
    for (let i = 0, max = windowFrameArray.length; i < max; i++) {
       let maxScore = Math.max(...latticeScoreArray[i]);
-      latticePathBacktraceArray[i] = latticeScoreArray[i].indexOf(maxScore);
+      latticePathBacktraceArray.push(latticeScoreArray[i].indexOf(maxScore));
    }
    if (DEBUG_MODE) {
       drawArrayOnCanvas("latticeCanvas", latticePathBacktraceArray, 2);
@@ -312,9 +312,9 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
       }
    }
    //Convert contour to contour string
-   let contourStringArray = new Array(contourArray.length);
+   let contourStringArray = [];
    for (let i = 0, max = contourArray.length; i < max; i++) {
-      contourStringArray[i] = CONTOUR_TO_QUERY_CHAR[(contourArray[i] - MIDI_LOW)];
+      contourStringArray.push(CONTOUR_TO_QUERY_CHAR[(contourArray[i] - MIDI_LOW)]);
    }
    if (DEBUG_MODE) {
       drawArrayOnCanvas("contourCanvas", contourArray, 10);
@@ -356,14 +356,14 @@ function bpmToNumberOfFrames(bpm, sampleRate) {
  * @return 
  */
 function quantiseNotes(noteArray, framesPerQuaver) {
-   let quantisedNotesArray = new Array(noteArray.length);
+   let quantisedNotesArray = [];
    for (let i = 0, max = noteArray.length; i < max; i++) {
       let exactQuavers = noteArray[i].duration / framesPerQuaver;
       let quantQuavers = 0;
       if (exactQuavers > MIN_NOTE_DURATION_REL) {
          quantQuavers = Math.max(1.0, Math.round(exactQuavers));
       }
-      quantisedNotesArray[i] = { pitch: noteArray[i].pitch, quavers_exact: exactQuavers, quavers_quant: quantQuavers, power: noteArray[i].power };
+      quantisedNotesArray.push({ pitch: noteArray[i].pitch, quavers_exact: exactQuavers, quavers_quant: quantQuavers, power: noteArray[i].power });
    }
    if (quantisedNotesArray.length === 0) {
       alert("Error while quantising notes.");
