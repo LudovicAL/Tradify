@@ -19,8 +19,8 @@
 
 <body class="d-flex flex-column h-100">
    <noscript data-i18n-key="noscript">Veuillez activer Javascript dans votre navigateur pour faire fonctionner cette page.</noscript>
-   <div class="container m-5">
-      <div class="d-flex justify-content-between row-cols-auto">
+   <div class="container mt-5">
+      <div class="d-flex justify-content-between align-items-center flex-wrap flex-fill">
          <button data-i18n-key="about" type="button" class="btn btn-dark" data-bs-toggle="collapse" data-bs-target="#aboutCollapsed">À propos</button>
          <select data-i18n-switcher class="form-select w-auto focus-ring" style="--bs-focus-ring-color: rgba(var(--bs-emphasis-color-rgb), 1.0);" aria-label="Dropdown menu for langage selection" id="langage-selection">
             <option value="fr" selected>fr</option>
@@ -35,12 +35,12 @@
             Cette application permet d'identifier des pièces de musique traditionnelles québécoises et irlandaises et d'en récupérer les partitions.
             Elle est fortement inspirée du travail de Tom Willy (<a href="https://folkfriend.app/" target="_blank">FolkFriend</a>).
          </p>
-         <div class="row justify-content-between row-cols-auto">
+         <div class="d-flex justify-content-between align-items-center flex-wrap flex-fill">
             <a data-i18n-key="download" href="https://github.com/LudovicAL/Partitions/archive/refs/heads/main.zip" class="btn btn-success mb-3" role="button">Télécharger les partitions au format ZIP</a>
             <a data-i18n-key="feedback" href="mailto:ludovicaubut@hotmail.com" class="btn btn-warning mb-3" role="button">Communiquer avec Tradify</a>
          </div>
          <h4 data-i18n-key="links">Liens utiles</h4>
-         <div class="container d-flex flex-wrap justify-content-center">
+         <div class="container d-flex flex-wrap flex-fill justify-content-center">
             <div class="card m-1" style="width: 18rem;">
                <div class="card-body">
                   <h5 data-i18n-key="repositoryTitle" class="card-title">Dépôt Github</h5>
@@ -150,17 +150,13 @@
       </div>
    </div>
    <footer class="footer mt-auto py-3 bg-light">
-      <div class="container mx-5">
-         <div class="row justify-content-between row-cols-auto">
-            <small data-i18n-key="footer" class="text-muted align-self-center">Adapté du travail de Tom Wyllie (<a href="https://folkfriend.app/" target="_blank">FolkFriend</a>) par Ludovic A.-Lussier.</small>
-            <div class="d-flex justify-content-end">
-               <a href="https://buymeacoffee.com/ludovical" class="rounded-3 border border-2 p-2 text-reset text-decoration-none fs-5 align-self-center" title="Buy me a coffee" target="_blank">
-                  <div class="row px-3 row-cols-auto">
-                     <img src="icons/BuyMeACoffee.svg" alt="Buy me a coffee" class="img-fluid align-self-center p-0" style="height:35px">
-                     <div data-i18n-key="buymeacoffee" class="align-self-center fw-bolder p-0">Achetez-moi un café</div>
-                  </div>
-               </a>
-            </div>
+      <div class="container">
+         <div class="d-flex justify-content-between align-items-center flex-wrap flex-fill">
+            <small data-i18n-key="footer" class="text-muted">Adapté du travail de Tom Wyllie (<a href="https://folkfriend.app/" target="_blank">FolkFriend</a>) par Ludovic A.-Lussier.</small>
+            <a href="https://buymeacoffee.com/ludovical" class="d-flex align-items-center flex-nowrap rounded-3 border border-2 p-2 text-reset text-decoration-none fs-5" title="Buy me a coffee" target="_blank">
+               <img src="icons/BuyMeACoffee.svg" alt="Buy me a coffee" class="img-fluid p-0" style="height:35px">
+               <div data-i18n-key="buymeacoffee" class="fw-bolder p-0">Achetez-moi un café</div>
+            </a>
          </div>
       </div>
    </footer>
