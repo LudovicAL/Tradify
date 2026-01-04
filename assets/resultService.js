@@ -51,6 +51,7 @@ function startDisplaying(onFinishedDisplaying, tuneSearch) {
          bCellTuneNameLink.textContent = tune.file_name.replaceAll(";", "\r\n");
          bCellTuneNameLink.classList.add("btn");
          bCellTuneNameLink.classList.add("btn-link");
+         bCellTuneNameLink.classList.add("text-start");
          bCellTuneNameLink.addEventListener("click", (clickEvent) => {
             if (navigator.onLine) {
                let url = githubUrl + tune.file_name.replaceAll(" ", "%20").replaceAll(";", "%3B").replaceAll("#", "%23") + ".pdf";
@@ -61,17 +62,6 @@ function startDisplaying(onFinishedDisplaying, tuneSearch) {
                console.log(errorMessage);
             }
          });
-         
-         /*
-         const bCellTuneNameLink = document.createElement("a");
-         bCellTuneNameLink.setAttribute("style", "white-space: pre;");
-         bCellTuneNameLink.textContent = tune.file_name.replaceAll(";", "\r\n");
-         bCellTuneNameLink.href = githubUrl + tune.file_name.replaceAll(" ", "%20").replaceAll(";", "%3B").replaceAll("#", "%23") + ".pdf";
-         bCellTuneNameLink.target = "_blank";
-         bCellTuneNameLink.rel = "noopener noreferrer";
-         */
-         
-         
          bCellTuneName.appendChild(bCellTuneNameLink);
          bRow.appendChild(bCellTuneName);
          //Tune score column

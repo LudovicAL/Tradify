@@ -40,5 +40,6 @@
    "insufficentDataForAnalysis": "Les données enregistrées sont insuffisantes pour poursuivre avec l'analyse. Vous jouez peut-être votre musique trop doucement.",
    "insufficentDataForSearch": "Les données enregistrées sont insuffisantes pour poursuivre avec la recherche. Vous jouez peut-être votre musique trop doucement.",
    "zeroResult": "0 résultat. Essayez de nouveau!",
+   "offline": "Vous devez être connecté à Internet pour accéder à ce lien.",
    "buymeacoffee": "Achetez-moi un café"
 }

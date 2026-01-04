@@ -40,5 +40,6 @@
    "insufficentDataForAnalysis": "The recorded data is insufficent to proceed further with the analysis. You may be playing your music too quietly.",
    "insufficentDataForSearch": "The recorded data is insufficent to proceed further with the search. You may be playing your music too quietly.",
    "zeroResult": "0 results. Try again!",
+   "offline": "Please connect to the Internet before accessing this link.",
    "buymeacoffee": "Buy me a coffee"
 }
