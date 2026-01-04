@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v8";
+const CACHE_NAME = "tradify-v9";
 const APP_STATIC_RESOURCES = [
    "./index.html",
    "./icons/Title.png",
@@ -10,7 +10,17 @@ const APP_STATIC_RESOURCES = [
    "./assets/fft/fft.js",
    "./assets/constants.js",
    "./assets/tuneSearchClass.js",
-   "./assets/utils.js"
+   "./assets/utils.js",
+   "./assets/locale.js",
+   "./assets/resultService.js",
+   "./assets/tuneIndexService.js",
+   "./assets/toAbcConverter.js",
+   "./assets/processingService.js",
+   "./assets/importingService.js",
+   "./assets/recordingService.js",
+   "./assets/controler.js",
+   "./assets/pageLoadTrigger.js",
+   "./manifest.json"
 ];
 
 self.addEventListener("install", (installEvent) => {
