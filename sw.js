@@ -24,7 +24,6 @@ const APP_STATIC_RESOURCES = [
    "./assets/afterPageLoad.js",
    "./manifest.json"
 ];
-*/
 
 self.addEventListener("install", (installEvent) => {
    console.log("Started: Service worker installation");
