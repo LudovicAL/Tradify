@@ -1,4 +1,6 @@
 var localeLoaded = false;
+var installPrompt = null;
+var installButton = document.getElementById("installButton");
 
 document.addEventListener("DOMContentLoaded", async () => {
    console.log("Started: Locale retrieval");
@@ -27,4 +29,28 @@ function waitForBoolean() {
          }
       }, 100); // Check every 100 milliseconds
    });
+}
+
+window.addEventListener("beforeinstallprompt", (event) => {
+   event.preventDefault();
+   installPrompt = event;
+   installButton.classList.remove("d-none");
+});
+
+window.addEventListener("appinstalled", () => {
+  disableInAppInstallPrompt();
+});
+
+installButton.addEventListener("click", async () => {
+  if (!installPrompt) {
+    return;
+  }
+  const result = await installPrompt.prompt();
+  console.log("Install prompt was: " + result.outcome);
+  disableInAppInstallPrompt();
+});
+
+function disableInAppInstallPrompt() {
+  installPrompt = null;
+  installButton.classList.remove("d-none");
 }
