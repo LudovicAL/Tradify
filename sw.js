@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v34";
+const CACHE_NAME = "tradify-v35";
 const APP_STATIC_RESOURCES = [
    "./",
    "./index.html",
