@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v30";
+const CACHE_NAME = "tradify-v31";
 const APP_STATIC_RESOURCES = [
    "./",
    "./index.html",
@@ -41,7 +41,6 @@ self.addEventListener("install", (installEvent) => {
    console.log("Finished: Service worker installation");
 });
 
-/*
 self.addEventListener("activate", (activateEvent) => {
    console.log("Started: Service worker activation");
    activateEvent.waitUntil(
@@ -61,7 +60,6 @@ self.addEventListener("activate", (activateEvent) => {
    );
    console.log("Finished: Service worker activation");
 });
-*/
 
 self.addEventListener("fetch", fetchEvent => {
    fetchEvent.respondWith(
