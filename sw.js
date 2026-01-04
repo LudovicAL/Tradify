@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v19";
+const CACHE_NAME = "tradify-v20";
 const APP_STATIC_RESOURCES = [
    "/index.html",
    "/icons/Title.png",
@@ -29,7 +29,7 @@ self.addEventListener("install", (installEvent) => {
    installEvent.waitUntil(
       (async () => {
          const cache = await caches.open(CACHE_NAME);
-         cache.addAll(APP_STATIC_RESOURCES);
+         await cache.addAll(APP_STATIC_RESOURCES);
       })()
    );
    console.log("Finished: Service worker installation");
