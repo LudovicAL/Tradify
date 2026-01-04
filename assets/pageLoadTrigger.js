@@ -3,9 +3,9 @@ var localeLoaded = false;
 if ("serviceWorker" in navigator) {
    console.log("Started: Service worker registration");
    navigator.serviceWorker.register("sw.js").then(registration => {
-      console.log("   Service Worker registered:\n" + registration);
+      console.log("   Service Worker registered");
    }).catch(error => {
-      console.log("   Service Worker registration failed:\n" + error);
+      console.log("   Service Worker registration failed:\n   " + error);
    });
    console.log("Finished: Service worker registration");
 } else {
