@@ -47,7 +47,6 @@ function startDisplaying(onFinishedDisplaying, tuneSearch) {
          //Tune name column
          const bCellTuneName = document.createElement("td");
          const bCellTuneNameLink = document.createElement("button");
-         bCellTuneNameLink.setAttribute("style", "white-space: pre;");
          bCellTuneNameLink.textContent = tune.file_name.replaceAll(";", "\r\n");
          bCellTuneNameLink.classList.add("btn");
          bCellTuneNameLink.classList.add("btn-link");
