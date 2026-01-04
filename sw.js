@@ -2,12 +2,12 @@ const CACHE_NAME = "tradify-v27";
 const APP_STATIC_RESOURCES = [
    "./",
    "./index.html",
-   "./icons/Title.png"];
-/*
+   "./icons/Title.png",
    "./icons/Idle.svg",
    "./icons/BuyMeACoffee.svg",
+   "./icons/favicon.ico",
    "./assets/aho-corasick/aho-corasick.js",
-   "./assets/als-wave-parser/wave-parser.js",
+   "./assets/als-wave-parser/wav-parser.js",
    "./assets/fft/utils.js",
    "./assets/fft/fft.js",
    "./assets/constants.js",
@@ -21,7 +21,6 @@ const APP_STATIC_RESOURCES = [
    "./assets/importingService.js",
    "./assets/recordingService.js",
    "./assets/controler.js",
-   "./assets/beforePageLoad.js",
    "./assets/afterPageLoad.js",
    "./manifest.json"
 ];
