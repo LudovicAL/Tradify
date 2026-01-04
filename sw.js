@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v17";
+const CACHE_NAME = "tradify-v18";
 const APP_STATIC_RESOURCES = [
    "/index.html",
    "/icons/Title.png",
@@ -35,6 +35,7 @@ self.addEventListener("install", (installEvent) => {
    console.log("Finished: Service worker installation");
 });
 
+/*
 self.addEventListener("activate", (activateEvent) => {
    console.log("Started: Service worker activation");
    activateEvent.waitUntil(
@@ -54,6 +55,7 @@ self.addEventListener("activate", (activateEvent) => {
    );
    console.log("Finished: Service worker activation");
 });
+*/
 
 self.addEventListener("fetch", fetchEvent => {
    fetchEvent.respondWith(
@@ -66,7 +68,7 @@ self.addEventListener("fetch", fetchEvent => {
          }
          console.log("SW: Querying server for: " + fetchEvent.request.url);
          const responseFromNetwork = await fetch(fetchEvent.request);
-         //await cache.put(request, response);
+         await cache.put(request, response);
          return responseFromNetwork;
       })() 
    );
