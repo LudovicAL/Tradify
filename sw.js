@@ -1,10 +1,8 @@
 self.addEventListener("install", e => {
    console.log("Started: Service worker installation");
-   e.waitUntil(
-      caches.open("static").then(cache => {
-         return cache.addAll(["./"]);
-      });
-   );
+   e.waitUntil(caches.open("static").then(cache => {
+      return cache.addAll(["./"]);
+   }));
    console.log("Finished: Service worker installation");
 });
 
