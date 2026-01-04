@@ -14,14 +14,14 @@ self.addEventListener("install", event => {
 });
 
 /*
-self.addEventListener("fetch", e => {
-   e.respondWith(caches.match(e.request).then(response => {
+self.addEventListener("fetch", event => {
+   event.respondWith(caches.match(event.request).then(response => {
       if (response) {
-         console.log("SW: Using cached version of: " + e.request.url);
+         console.log("SW: Using cached version of: " + event.request.url);
          return response;
       } else {
-         console.log("SW: Querying server for: " + e.request.url);
-         return fetch(e.request);
+         console.log("SW: Querying server for: " + event.request.url);
+         return fetch(event.request);
       }
    }));
 });

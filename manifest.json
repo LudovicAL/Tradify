@@ -9,6 +9,12 @@
    "display": "standalone",
    "icons": [
       {
+         "src": "icons/logo-512.svg",
+         "sizes": "any",
+         "type": "image/svg",
+         "purpose": "maskable"
+      },
+      {
          "src": "icons/logo-512.png",
          "sizes": "512x512",
          "type": "image/png",
