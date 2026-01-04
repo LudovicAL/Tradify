@@ -1,5 +1,4 @@
-const SERVICE_WORKER_VERSION = "2";
-const CACHE_NAME = "tradify-cache-${SERVICE_WORKER_VERSION}";
+const CACHE_NAME = "tradify-cache-3";
 const APP_STATIC_RESOURCES = ["./"];
 
 self.addEventListener("install", event => {
