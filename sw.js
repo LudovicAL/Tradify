@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v29";
+const CACHE_NAME = "tradify-v30";
 const APP_STATIC_RESOURCES = [
    "./",
    "./index.html",
@@ -6,6 +6,10 @@ const APP_STATIC_RESOURCES = [
    "./icons/Idle.svg",
    "./icons/BuyMeACoffee.svg",
    "./icons/favicon.ico",
+   "./assets/jquery/jquery.min.js",
+   "./assets/bootstrap/bootstrap.min.css",
+   "./assets/bootstrap/bootstrap.bundle.min.js",
+   "./assets/idb-keyval/idb-keyval.mjs",
    "./assets/aho-corasick/aho-corasick.js",
    "./assets/als-wave-parser/wav-parser.js",
    "./assets/fft/utils.js",
