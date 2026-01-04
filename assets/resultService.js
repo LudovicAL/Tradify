@@ -52,6 +52,7 @@ function startDisplaying(onFinishedDisplaying, tuneSearch) {
          bCellTuneNameLink.classList.add("btn");
          bCellTuneNameLink.classList.add("btn-link");
          bCellTuneNameLink.classList.add("text-start");
+         bCellTuneNameLink.classList.add("border-0");
          bCellTuneNameLink.addEventListener("click", (clickEvent) => {
             if (navigator.onLine) {
                let url = githubUrl + tune.file_name.replaceAll(" ", "%20").replaceAll(";", "%3B").replaceAll("#", "%23") + ".pdf";
