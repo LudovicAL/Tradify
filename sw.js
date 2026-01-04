@@ -1,8 +1,9 @@
-const CACHE_NAME = "tradify-v26";
+const CACHE_NAME = "tradify-v27";
 const APP_STATIC_RESOURCES = [
    "./",
    "./index.html",
-   "./icons/Title.png",
+   "./icons/Title.png"];
+/*
    "./icons/Idle.svg",
    "./icons/BuyMeACoffee.svg",
    "./assets/aho-corasick/aho-corasick.js",
@@ -24,6 +25,7 @@ const APP_STATIC_RESOURCES = [
    "./assets/afterPageLoad.js",
    "./manifest.json"
 ];
+*/
 
 self.addEventListener("install", (installEvent) => {
    console.log("Started: Service worker installation");
