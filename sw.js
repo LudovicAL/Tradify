@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v23";
+const CACHE_NAME = "tradify-v24";
 const APP_STATIC_RESOURCES = [
    "./",
    "./index.html"];
@@ -71,10 +71,10 @@ self.addEventListener("fetch", fetchEvent => {
             return cachedResponse;
          }
          console.log("SW: Querying server for: " + fetchEvent.request.url);
-         return fetch(fetchEvent.request);
-         //const responseFromNetwork = await fetch(fetchEvent.request);
-         //await cache.put(fetchEvent.request, responseFromNetwork);
-         //return responseFromNetwork;
+         fetch(fetchEvent.request).then((networkResponse) => {return networkResponse});
+         //const networkResponse = await fetch(fetchEvent.request);
+         //await cache.put(fetchEvent.request, networkResponse);
+         //return networkResponse;
       })() 
    );
 });
