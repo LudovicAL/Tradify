@@ -71,7 +71,7 @@ self.addEventListener("fetch", fetchEvent => {
             return cachedResponse;
          }
          console.log("SW: Querying server for: " + fetchEvent.request.url);
-         return await fetch(fetchEvent.request);
+         return fetch(fetchEvent.request);
          //const responseFromNetwork = await fetch(fetchEvent.request);
          //await cache.put(fetchEvent.request, responseFromNetwork);
          //return responseFromNetwork;
