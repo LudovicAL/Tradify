@@ -1,13 +1,13 @@
 {
    "name": "Tradify",
    "short_name": "Tradify",
-   "description": "The Shazam of trad music",
+   "description": "The Shazam of trad music. This app helps you identify a traditionnal Quebec or irish tune being played.",
    "start_url": "./",
    "scope": "./",
    "background_color": "#ffffff",
    "theme_color": "#000000",
    "display": "standalone",
-   "icon": [
+   "icons": [
       {
          "src": "icons/logo-512.png",
          "sizes": "512x512",

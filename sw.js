@@ -1,3 +1,5 @@
+const SERVICE_WORKER_VERSION = "1";
+
 self.addEventListener("install", e => {
    console.log("Started: Service worker installation");
    e.waitUntil(caches.open("static").then(cache => {
@@ -7,8 +9,13 @@ self.addEventListener("install", e => {
 });
 
 self.addEventListener("fetch", e => {
-   console.log("SW: Intercepting request for: " + e.request.url);
    e.respondWith(caches.match(e.request).then(response => {
-      return response || fetch(e.request);
+      if (response) {
+         console.log("SW: Using cached version of: " + e.request.url);
+         return response;         
+      } else {
+         console.log("SW: Querying server for: " + e.request.url);
+         return fetch(e.request);
+      }
    }));
 });
