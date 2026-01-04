@@ -1,7 +1,7 @@
 const CACHE_NAME = "tradify-v5";
 const APP_STATIC_RESOURCES = ["./"];
 
-self.addEventListener("install", event => {
+self.addEventListener("install", (event) => {
    console.log("Started: Service worker installation");
    event.waitUntil(
       (async () => {
@@ -33,13 +33,16 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", event => {
-   event.respondWith(caches.match(event.request).then(response => {
-      if (response) {
-         console.log("SW: Using cached version of: " + event.request.url);
-         return response;
-      } else {
+   event.respondWith(
+      (async () => {
+         const cache = await caches.open(CACHE_NAME);
+         const cachedResponse = await cache.match(event.request);
+         if (cachedResponse) {
+            console.log("SW: Using cached version of: " + event.request.url);
+            return cachedResponse;
+         }
          console.log("SW: Querying server for: " + event.request.url);
          return fetch(event.request);
-      }
-   }));
+      })() 
+   );
 });
