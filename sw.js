@@ -1,21 +1,45 @@
 const SERVICE_WORKER_VERSION = "1";
+const CACHE_NAME = "tradify-cache-${SERVICE_WORKER_VERSION}";
+const APP_STATIC_RESOURCES = ["./"];
 
-self.addEventListener("install", e => {
+self.addEventListener("install", event => {
    console.log("Started: Service worker installation");
-   e.waitUntil(caches.open("static").then(cache => {
-      return cache.addAll(["./"]);
-   }));
+   event.waitUntil(
+      (async () => {
+         const cache = await caches.open(CACHE_NAME);
+         cache.addAll(APP_STATIC_RESOURCES);
+      })()
+   );
    console.log("Finished: Service worker installation");
 });
 
+/*
 self.addEventListener("fetch", e => {
    e.respondWith(caches.match(e.request).then(response => {
       if (response) {
          console.log("SW: Using cached version of: " + e.request.url);
-         return response;         
+         return response;
       } else {
          console.log("SW: Querying server for: " + e.request.url);
          return fetch(e.request);
       }
    }));
+});
+*/
+
+self.addEventListener("activate", (event) => {
+   event.waitUntil(
+      (async () => {
+         const names = await caches.keys();
+         await Promise.all(
+            names.map((name) => {
+               if (name !== CACHE_NAME) {
+                  return caches.delete(name);
+               }
+               return undefined;
+            }),
+         );
+         await clients.claim();
+      })(),
+   );
 });
