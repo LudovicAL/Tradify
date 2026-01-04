@@ -179,8 +179,8 @@ startRecordingButton.addEventListener("click", onStartRecordingButtonClick);
 importWavButton.onclick = function() {
    hiddenFilePicker.click();
 };
-hiddenFilePicker.addEventListener('change', (event) => {
-   onStartImporting(event);
+hiddenFilePicker.addEventListener('change', (changeEvent) => {
+   onStartImporting(changeEvent);
 });
 if (DEBUG_MODE) {
    document.getElementById("debugDiv").classList.remove("collapse");;
