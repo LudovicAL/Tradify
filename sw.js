@@ -30,6 +30,9 @@ const APP_STATIC_RESOURCES = [
    "./manifest.json"
 ];
 
+/*
+ * When the page is first loaded, every static resource is loaded in the cache.
+ */
 self.addEventListener("install", (installEvent) => {
    console.log("Started: Service worker installation");
    installEvent.waitUntil(
@@ -41,6 +44,9 @@ self.addEventListener("install", (installEvent) => {
    console.log("Finished: Service worker installation");
 });
 
+/*
+ * When the page is loaded, if an old cache is detected it is deleted.
+ */
 self.addEventListener("activate", (activateEvent) => {
    console.log("Started: Service worker activation");
    activateEvent.waitUntil(
@@ -61,6 +67,11 @@ self.addEventListener("activate", (activateEvent) => {
    console.log("Finished: Service worker activation");
 });
 
+/*
+ * When a fetch request is about to be sent to recuperate a resource, that request is intercepted.
+ * If the desired resource exists in the cache, it is fetched there instead of from the server.
+ * Otherwise the resource is fetched from the server.
+ */
 self.addEventListener("fetch", fetchEvent => {
    fetchEvent.respondWith(
       (async () => {
@@ -72,9 +83,6 @@ self.addEventListener("fetch", fetchEvent => {
          }
          console.log("SW: Querying server for: " + fetchEvent.request.url);
          return await fetch(fetchEvent.request);
-         //const networkResponse = await fetch(fetchEvent.request);
-         //await cache.put(fetchEvent.request, networkResponse);
-         //return networkResponse;
       })() 
    );
 });
