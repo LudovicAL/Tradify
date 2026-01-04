@@ -1,5 +1,5 @@
-const CACHE_NAME = "tradify-v5";
-const APP_STATIC_RESOURCES = ["./"];
+const CACHE_NAME = "tradify-v6";
+const APP_STATIC_RESOURCES = ["./index.html"];
 
 self.addEventListener("install", (event) => {
    console.log("Started: Service worker installation");
