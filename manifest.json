@@ -1,0 +1,22 @@
+{
+   "name": "Tradify",
+   "short_name": "Tradify",
+   "description": "The Shazam of trad music",
+   "start_url": "./",
+   "scope": "./",
+   "background_color": "#ffffff",
+   "theme_color": "#000000",
+   "display": "standalone",
+   "icon": [
+      {
+         "src": "icons/logo-512.png",
+         "sizes": "512x512",
+         "": "image/png"
+      },
+      {
+         "src": "icons/logo-192.png",
+         "sizes": "192x192",
+         "": "image/png"
+      }
+   ]
+}
