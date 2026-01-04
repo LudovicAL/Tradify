@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-cache-3";
+const CACHE_NAME = "tradify-v5";
 const APP_STATIC_RESOURCES = ["./"];
 
 self.addEventListener("install", event => {
@@ -12,7 +12,26 @@ self.addEventListener("install", event => {
    console.log("Finished: Service worker installation");
 });
 
-/*
+self.addEventListener("activate", (event) => {
+   console.log("Started: Service worker activation");
+   event.waitUntil(
+      (async () => {
+         const names = await caches.keys();
+         await Promise.all(
+            names.map((name) => {
+               if (name !== CACHE_NAME) {
+                  console.log("   Old cache '" + name + "' will be updated with new cache '" + CACHE_NAME + "'.");
+                  return caches.delete(name);
+               }
+               return undefined;
+            }),
+         );
+         await clients.claim();
+      })(),
+   );
+   console.log("Finished: Service worker activation");
+});
+
 self.addEventListener("fetch", event => {
    event.respondWith(caches.match(event.request).then(response => {
       if (response) {
@@ -23,22 +42,4 @@ self.addEventListener("fetch", event => {
          return fetch(event.request);
       }
    }));
-});
-*/
-
-self.addEventListener("activate", (event) => {
-   event.waitUntil(
-      (async () => {
-         const names = await caches.keys();
-         await Promise.all(
-            names.map((name) => {
-               if (name !== CACHE_NAME) {
-                  return caches.delete(name);
-               }
-               return undefined;
-            }),
-         );
-         await clients.claim();
-      })(),
-   );
 });
