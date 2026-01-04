@@ -164,13 +164,11 @@ async function jitterButton() {
  */
 function rotateCog() {
    if (currentStatus === Status.PROCESSING || currentStatus === Status.SEARCHING || currentStatus === Status.DISPLAYING) {
-      startRecordingButton.disabled = true;
       startRecordingImage.src = "icons/Cog.svg";
       currentCogRotation = (currentCogRotation + 1) % 360;
       startRecordingButton.style.transform = `rotate(${currentCogRotation}deg)`;
       window.requestAnimationFrame(rotateCog);
    } else {
-      startRecordingButton.disabled = false;
       startRecordingImage.src = "icons/Idle.svg";
       currentCogRotation = 0;
       startRecordingButton.style.transform = `rotate(${currentCogRotation}deg)`;

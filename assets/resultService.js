@@ -1,4 +1,5 @@
 var resultTable = document.getElementById("resultTable");
+var githubUrl = navigator.pdfViewerEnabled ? "https://ludovical.github.io/Partitions/" : "https://github.com/LudovicAL/Partitions/blob/main/";
 
 /**
  * Displays on the screen the result of a search.
@@ -48,7 +49,7 @@ function startDisplaying(onFinishedDisplaying, tuneSearch) {
          const bCellTuneNameLink = document.createElement("a");
          bCellTuneNameLink.setAttribute("style", "white-space: pre;");
          bCellTuneNameLink.textContent = tune.file_name.replaceAll(";", "\r\n");
-         bCellTuneNameLink.href = "https://ludovical.github.io/Partitions/" + tune.file_name.replaceAll(" ", "%20").replaceAll(";", "%3B").replaceAll("#", "%23") + ".pdf";
+         bCellTuneNameLink.href = githubUrl + tune.file_name.replaceAll(" ", "%20").replaceAll(";", "%3B").replaceAll("#", "%23") + ".pdf";
          bCellTuneNameLink.target = "_blank";
          bCellTuneNameLink.rel = "noopener noreferrer";
          bCellTuneName.appendChild(bCellTuneNameLink);
