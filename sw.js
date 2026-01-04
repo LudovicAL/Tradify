@@ -1,9 +1,9 @@
-const CACHE_NAME = "tradify-v6";
+const CACHE_NAME = "tradify-v7";
 const APP_STATIC_RESOURCES = ["./index.html"];
 
-self.addEventListener("install", (event) => {
+self.addEventListener("install", (installEvent) => {
    console.log("Started: Service worker installation");
-   event.waitUntil(
+   installEvent.waitUntil(
       (async () => {
          const cache = await caches.open(CACHE_NAME);
          cache.addAll(APP_STATIC_RESOURCES);
@@ -12,9 +12,9 @@ self.addEventListener("install", (event) => {
    console.log("Finished: Service worker installation");
 });
 
-self.addEventListener("activate", (event) => {
+self.addEventListener("activate", (activateEvent) => {
    console.log("Started: Service worker activation");
-   event.waitUntil(
+   activateEvent.waitUntil(
       (async () => {
          const names = await caches.keys();
          await Promise.all(
@@ -32,17 +32,17 @@ self.addEventListener("activate", (event) => {
    console.log("Finished: Service worker activation");
 });
 
-self.addEventListener("fetch", event => {
-   event.respondWith(
+self.addEventListener("fetch", fetchEvent => {
+   fetchEvent.respondWith(
       (async () => {
          const cache = await caches.open(CACHE_NAME);
-         const cachedResponse = await cache.match(event.request);
+         const cachedResponse = await cache.match(fetchEvent.request);
          if (cachedResponse) {
-            console.log("SW: Using cached version of: " + event.request.url);
+            console.log("SW: Using cached version of: " + fetchEvent.request.url);
             return cachedResponse;
          }
-         console.log("SW: Querying server for: " + event.request.url);
-         return fetch(event.request);
+         console.log("SW: Querying server for: " + fetchEvent.request.url);
+         return fetch(fetchEvent.request);
       })() 
    );
 });
