@@ -83,7 +83,7 @@ function startDisplaying(onFinishedDisplaying, tuneSearch) {
                bCellScore.classList.add("table-danger");
                break;
          }
-         bCellScore.textContent = (score * 100).toFixed(1) + "%";
+         bCellScore.textContent = (score * 100).toFixed(0) + "%";
          bCellScore.classList.add("text-end");
          bRow.appendChild(bCellScore);
          tBody.appendChild(bRow);
