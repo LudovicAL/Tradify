@@ -30,10 +30,10 @@ const APP_STATIC_RESOURCES = [
    "./icons/Title.png",
    "./lang/en.json",
    "./lang/fr.json",
+   */
    "./manifest.json",
    "./index.html",
    "./"
-   */
 ];
 
 /*
