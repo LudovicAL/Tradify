@@ -37,9 +37,10 @@ function startProcessing(onFinishedProcessing, tuneSearch) {
  */
 function computeWindowFrame(audioSampleArray, sampleRate) {
    console.log("   Started: Window frame computing");
+   let blackmanWindow = getBlackmanWindow();
    let windowFrameArray = [];
    for (let audioSample of audioSampleArray) {
-      windowFrameArray.push(processAudioSample(audioSample, sampleRate));
+      windowFrameArray.push(processAudioSample(audioSample, sampleRate, blackmanWindow));
    }
    if (DEBUG_MODE) {
       drawArrayOfArraysOnCanvas("signalCanvas", windowFrameArray, windowFrameArray.length, MIDI_NUM);
@@ -55,9 +56,8 @@ function computeWindowFrame(audioSampleArray, sampleRate) {
  * @param {int} sampleRate The sample rate of the recording.
  * @return The converted signal.
  */
-function processAudioSample(audioSample, sampleRate) {
+function processAudioSample(audioSample, sampleRate, blackmanWindow) {
    //Apply Blackman Window Function
-   let blackmanWindow = getBlackmanWindow();
    for (let i = 0; i < WINDOW_SIZE; i++) {
       audioSample[i] *= blackmanWindow[i];
    }
