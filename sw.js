@@ -23,9 +23,9 @@ const APP_STATIC_RESOURCES = [
    "./assets/utils.js",
    /*
    "./icons/BuyMeACoffee.svg",
+   */
    "./icons/Cog.svg",
    "./icons/flavicon.ico",
-   */
    "./icons/Idle.svg",
    "./icons/Recording.svg",
    "./icons/Title.png",
