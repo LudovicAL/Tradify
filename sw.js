@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v45";
+const CACHE_NAME = "tradify-v46";
 const APP_STATIC_RESOURCES = [
    "./assets/aho-corasick/aho-corasick.js",
    "./assets/als-wave-parser/wav-parser.js",

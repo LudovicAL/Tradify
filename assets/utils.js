@@ -84,27 +84,22 @@ function drawArrayOnCanvas(canvasName, dataArray, widthMagnification) {
  */
 async function fetchJsonFile(url, storeName, storeLifeSpanInDays) {
    jsonFile = await window.idbKV.get(storeName);
-   if (navigator.onLine) {
-      console.log("   Navigator online");
-      if (typeof jsonFile === 'undefined') {
-         console.log("   No file named " + storeName + " was cached, requesting download");
+   if (typeof jsonFile === 'undefined') {
+      console.log("   No file named " + storeName + " was cached, requesting download");
+      jsonFile = await fetch(url).then((response) => response.json());
+      await window.idbKV.set(storeName, jsonFile);
+      await window.idbKV.set(storeName + "Date", new Date());
+   } else {
+      console.log("   Found cached file named " + storeName);
+      let fileCacheDate = await window.idbKV.get(storeName + "Date");
+      if (typeof fileCacheDate === 'undefined' || ((Date.now() - fileCacheDate) >= (storeLifeSpanInDays * MILLISECONDS_PER_DAY))) {
+         console.log("   Cached " + storeName + " date is undefined or too old. The file will be renewed.");
          jsonFile = await fetch(url).then((response) => response.json());
          await window.idbKV.set(storeName, jsonFile);
          await window.idbKV.set(storeName + "Date", new Date());
       } else {
-         console.log("   Found cached file named " + storeName);
-         let fileCacheDate = await window.idbKV.get(storeName + "Date");
-         if (typeof fileCacheDate === 'undefined' || ((Date.now() - fileCacheDate) >= (storeLifeSpanInDays * MILLISECONDS_PER_DAY))) {
-            console.log("   Cached " + storeName + " date is undefined or too old. The file will be renewed.");
-            jsonFile = await fetch(url).then((response) => response.json());
-            await window.idbKV.set(storeName, jsonFile);
-            await window.idbKV.set(storeName + "Date", new Date());
-         } else {
-            console.log("   Cached " + storeName + " date is recent enough. No action to take.");
-         }
+         console.log("   Cached " + storeName + " date is recent enough. No action to take.");
       }
-   } else {
-      console.log("   Navigator offline. No action to take.");
    }
    return jsonFile;
 }

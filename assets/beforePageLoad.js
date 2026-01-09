@@ -9,7 +9,5 @@ if ("serviceWorker" in navigator) {
       console.log("Finished: Service worker registration");
    });
 } else {
-   let errorMessage = "Votre nagivateur ne supporte pas la navigation hors ligne pour cette application. Veuillez changer de navigateur.";
-   alert(errorMessage);
-   console.log(errorMessage);
+   console.log("   Current browser does not support Service Workers.");
 }
