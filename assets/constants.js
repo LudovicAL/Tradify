@@ -206,6 +206,6 @@ const Status = Object.freeze({
   SEARCHING: "SEARCHING",
   DISPLAYING: "DISPLAYING"
 });
-const DEBUG_MODE = false;
 const DEFAULT_LOCALE = "fr";
 const SUPPORTED_LOCALES = ["fr", "en"];
+var DEBUG_MODE = false; //This remains a variable, as it must be changeable at runtime.
