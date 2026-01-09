@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v46";
+const CACHE_NAME = "tradify-v47";
 const APP_STATIC_RESOURCES = [
    "./assets/aho-corasick/aho-corasick.js",
    "./assets/als-wave-parser/wav-parser.js",
@@ -27,11 +27,11 @@ const APP_STATIC_RESOURCES = [
    "./icons/Idle.svg",
    "./icons/Recording.svg",
    "./icons/Title.png",
-   "./lang/en.json",
-   "./lang/fr.json",
    "./manifest.json",
    "./index.html",
-   "./"
+   "./",
+   "https://raw.githubusercontent.com/LudovicAL/Tradify/refs/heads/main/lang/en.json",
+   "https://raw.githubusercontent.com/LudovicAL/Tradify/refs/heads/main/lang/fr.json"
 ];
 
 /*
