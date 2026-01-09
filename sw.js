@@ -27,8 +27,6 @@ const APP_STATIC_RESOURCES = [
    "./icons/Idle.svg",
    "./icons/Recording.svg",
    "./icons/Title.png",
-   "./lang/en.json",
-   "./lang/fr.json",
    "./manifest.json",
    "./index.html",
    "./"
