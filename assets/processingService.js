@@ -38,6 +38,9 @@ function startProcessing(onFinishedProcessing, tuneSearch) {
 function computeWindowFrame(audioSampleArray, sampleRate) {
    console.log("   Started: Window frame computing");
    let blackmanWindow = getBlackmanWindow();
+   if (DEBUG_MODE) {
+      drawArrayOnCanvas("blackmanWindowCanvas", blackmanWindow, 2);
+   }
    let windowFrameArray = [];
    for (let audioSample of audioSampleArray) {
       windowFrameArray.push(processAudioSample(audioSample, sampleRate, blackmanWindow));
@@ -64,7 +67,7 @@ function processAudioSample(audioSample, sampleRate, blackmanWindow) {
    //Apply Fast Fourier Transform (FFT)
    let fftSignal = {"real": []};
    for (let i = 0; i < WINDOW_SIZE; i++) {
-      fftSignal.real.push(audioSample[i]); //Using this library: https://www.jsdelivr.com/package/npm/fftjs
+      fftSignal.real.push(audioSample[i]);
    }
    let fftResult1 = fft(fftSignal);
    //Compute K value
@@ -73,7 +76,7 @@ function processAudioSample(audioSample, sampleRate, blackmanWindow) {
       fftResult1.imag[i] = 0.0;
    }
    //Apply Fast Fourier Transform (FFT)
-   let fftResult2 = fft(fftResult1); //Using this library: https://www.jsdelivr.com/package/npm/fftjs
+   let fftResult2 = fft(fftResult1);
    //Apply peak pruning
    for (let i = 0; i < WINDOW_SIZE; i++) {
       fftResult2.real[i] = Math.max(0, fftResult2.real[i]);
@@ -132,8 +135,10 @@ function computeInterpolationIndices(sampleRate) {
       acBinMidis.push(acMidi);
    }
    if (acBinMidis[0] < MIDI_HIGH || acBinMidis[HALF_WINDOW_SIZE - 1] > MIDI_LOW) {
-      alert("Spectrogram range is insufficient. Has an invalid sample rate been used?");
-      throw "Spectrogram range is insufficient. Has an invalid sample rate been used?";
+      //Spectrogram range is insufficient. Has an invalid sample rate been used?
+      let errorMessage = getTranslation("insufficentSpectogramRange", "Une erreur interne est survenue (code d'erreur T1).");
+      alert(errorMessage);
+      throw errorMessage;
    }
    interpolationIndices = [];
    //Compute lowest MIDI value
@@ -153,8 +158,11 @@ function computeInterpolationIndices(sampleRate) {
       let w1 = (acBinMidis[hi - 1] - binMidi) / delta;
       let w2 = -(acBinMidis[hi] - binMidi) / delta;
       if (w1 > 1 || w1 < 0 || w2 > 1 || w2 < 0) {
-         alert("Invalid x1: " + w1 + ", x2: " + w2);
-         throw "Invalid x1: " + w1 + ", x2: " + w2;
+         //Invalid x1, x2
+         console.log("Invalid x1: " + w1 + ", x2: " + w2);
+         let errorMessage = getTranslation("invalidX1X2", "Une erreur interne est survenue (code d'erreur T2).");
+         alert(errorMessage);
+         throw errorMessage;
       }
       interpolationIndices.push({ hi_weight: w1, lo_weight: w2, hi_index: (hi + 1) });
    }
@@ -180,8 +188,9 @@ function computeLattice(windowFrameArray) {
       totalEnergy += frameTotalEnergy;
    }
    if (totalEnergy === 0) {
-      alert("Cannot decode complete silence!");
-      throw "Cannot decode complete silence!";
+      let errorMessage = getTranslation("cannotDecodeSilence", "Impossible de décoder un silence complet!");
+      alert(errorMessage);
+      throw errorMessage;
    }
    //Normalise data
    let normal = windowFrameArray.length / totalEnergy;
@@ -252,8 +261,10 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
    console.log("   Started: Contour computing");
    //Compute notes from lattice
    if (latticeArray.length === 0) {
-      alert("Computing an empty lattice is impossible.");
-      throw "Computing an empty lattice is impossible.";
+      //Computing an empty lattice is impossible.
+      let errorMessage = getTranslation("emptyLattice", "Une erreur interne est survenue (code d'erreur T3).");
+      alert(errorMessage);
+      throw errorMessage;
    }
    let noteArray = [];
    let prev_pitch = latticeIndiceToPich(latticeArray[0]);
@@ -366,8 +377,10 @@ function quantiseNotes(noteArray, framesPerQuaver) {
       quantisedNotesArray.push({ pitch: noteArray[i].pitch, quavers_exact: exactQuavers, quavers_quant: quantQuavers, power: noteArray[i].power });
    }
    if (quantisedNotesArray.length === 0) {
-      alert("Error while quantising notes.");
-      throw "Error while quantising notes.";
+      //Error while quantising notes.
+      let errorMessage = getTranslation("quantisationError", "Une erreur interne est survenue (code d'erreur T4).");
+      alert(errorMessage);
+      throw errorMessage;
    }
    return quantisedNotesArray;
 }

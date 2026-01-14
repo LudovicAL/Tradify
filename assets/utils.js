@@ -48,7 +48,7 @@ function drawArrayOfArraysOnCanvas(canvasName, arrayOfArrays, width, height) {
 /**
  * Draws an array on a given canvas.
  *
- * @param {String} canvasName The canvas on which to draw.
+ * @param {String} canvasName The ID of the html element on which to draw.
  * @param {List<int>} dataArray The data to draw on the canvas.
  * @param {int} widthMagnification A number by which to magnify the data on the X axis.
  */

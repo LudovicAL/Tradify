@@ -40,6 +40,11 @@
    "userMediaNotSupported": "Your browser does not support this application. Please change browser.",
    "insufficentDataForAnalysis": "The recorded data is insufficent to proceed further with the analysis. You may be playing your music too quietly.",
    "insufficentDataForSearch": "The recorded data is insufficent to proceed further with the search. You may be playing your music too quietly.",
+   "insufficentSpectogramRange": "An internal error occured (error code T1).",
+   "invalidX1X2": "An internal error occured (error code T2).",
+   "emptyLattice": "An internal error occured (error code T3).",
+   "quantisationError": "An internal error occured (error code T4).",
+   "cannotDecodeSilence": "Cannot decode complete silence!",
    "zeroResult": "0 results. Try again!",
    "offline": "Please connect to the Internet before accessing this link.",
    "buymeacoffee": "Buy me a coffee"
