@@ -9,3 +9,7 @@ L'application est disponible [ici](https://ludovical.github.io/Tradify/).
 This web app identifies for you traditional Quebec or Irish tunes from the Montreal repertoire.
 
 The app is available [here](https://ludovical.github.io/Tradify/).
+
+
+## Demo
+![Demo gif](https://github.com/LudovicAL/Tradify/blob/master/Demo.gif?raw=true)
