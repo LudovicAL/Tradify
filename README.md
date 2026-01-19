@@ -12,4 +12,4 @@ The app is available [here](https://ludovical.github.io/Tradify/).
 
 
 ## Demo
-![Demo gif](https://github.com/LudovicAL/Tradify/blob/master/demo.gif?raw=true)
+![Demo gif](https://github.com/LudovicAL/Tradify/blob/main/demo.gif?raw=true)
