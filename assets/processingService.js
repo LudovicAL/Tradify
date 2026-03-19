@@ -12,18 +12,23 @@ var interpolationIndices = null;
  */
 function startProcessing(onFinishedProcessing, tuneSearch) {
    console.log("Started: Audio processing");
-   let windowFrameArray = computeWindowFrame(tuneSearch.audioSampleArray, tuneSearch.sampleRate);
-   //Eliminating noise by keeping only frequencies of peek intensity
-   let latticeArray = computeLattice(windowFrameArray);
-   //Eliminating short burst of sound, keeping only longer burst
-   let contourString = computeContour(windowFrameArray, latticeArray, tuneSearch.sampleRate);
-   console.log("   ContourString:\n", contourString);
-   if (DEBUG_MODE) {
-      let contour = contourStringToContour(contourString);
-      let abc = contourToAbc(contour);
-      console.log("   Abc:\n" + abc);
+   try {
+      let windowFrameArray = computeWindowFrame(tuneSearch.audioSampleArray, tuneSearch.sampleRate);
+      //Eliminating noise by keeping only frequencies of peek intensity
+      let latticeArray = computeLattice(windowFrameArray);
+      //Eliminating short burst of sound, keeping only longer burst
+      let contourString = computeContour(windowFrameArray, latticeArray, tuneSearch.sampleRate);
+      console.log("   ContourString:\n", contourString);
+      if (DEBUG_MODE) {
+         let contour = contourStringToContour(contourString);
+         let abc = contourToAbc(contour);
+         console.log("   Abc:\n" + abc);
+      }
+      tuneSearch.setContourString(contourString);
+   } catch (e) {
+      alert(e.message);
+      console.log(e.message);
    }
-   tuneSearch.setContourString(contourString);
    console.log("Finished: Audio processing");
    onFinishedProcessing(tuneSearch);
 }
@@ -137,8 +142,7 @@ function computeInterpolationIndices(sampleRate) {
    if (acBinMidis[0] < MIDI_HIGH || acBinMidis[HALF_WINDOW_SIZE - 1] > MIDI_LOW) {
       //Spectrogram range is insufficient. Has an invalid sample rate been used?
       let errorMessage = getTranslation("insufficentSpectogramRange", "Une erreur interne est survenue (code d'erreur T1).");
-      alert(errorMessage);
-      throw errorMessage;
+      throw new Error(errorMessage);
    }
    interpolationIndices = [];
    //Compute lowest MIDI value
@@ -161,8 +165,7 @@ function computeInterpolationIndices(sampleRate) {
          //Invalid x1, x2
          console.log("Invalid x1: " + w1 + ", x2: " + w2);
          let errorMessage = getTranslation("invalidX1X2", "Une erreur interne est survenue (code d'erreur T2).");
-         alert(errorMessage);
-         throw errorMessage;
+         throw new Error(errorMessage);
       }
       interpolationIndices.push({ hi_weight: w1, lo_weight: w2, hi_index: (hi + 1) });
    }
@@ -189,8 +192,7 @@ function computeLattice(windowFrameArray) {
    }
    if (totalEnergy === 0) {
       let errorMessage = getTranslation("cannotDecodeSilence", "Impossible de décoder un silence complet!");
-      alert(errorMessage);
-      throw errorMessage;
+      throw new Error(errorMessage);
    }
    //Normalise data
    let normal = windowFrameArray.length / totalEnergy;
@@ -263,8 +265,7 @@ function computeContour(windowFrameArray, latticeArray, sampleRate) {
    if (latticeArray.length === 0) {
       //Computing an empty lattice is impossible.
       let errorMessage = getTranslation("emptyLattice", "Une erreur interne est survenue (code d'erreur T3).");
-      alert(errorMessage);
-      throw errorMessage;
+      throw new Error(errorMessage);
    }
    let noteArray = [];
    let prev_pitch = latticeIndiceToPich(latticeArray[0]);
@@ -379,8 +380,7 @@ function quantiseNotes(noteArray, framesPerQuaver) {
    if (quantisedNotesArray.length === 0) {
       //Error while quantising notes.
       let errorMessage = getTranslation("quantisationError", "Une erreur interne est survenue (code d'erreur T4).");
-      alert(errorMessage);
-      throw errorMessage;
+      throw new Error(errorMessage);
    }
    return quantisedNotesArray;
 }
