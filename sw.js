@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v63";
+const CACHE_NAME = "tradify-v64";
 const APP_STATIC_RESOURCES = [
    "./assets/aho-corasick/aho-corasick.js",
    "./assets/als-wave-parser/wav-parser.js",
@@ -91,4 +91,4 @@ self.addEventListener("fetch", fetchEvent => {
    );
 });
 
-document.getElementById("version").innerText = "Version " + CACHE_NAME
+document.getElementById("version").innerText = "Version " + CACHE_NAME;
