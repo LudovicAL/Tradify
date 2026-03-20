@@ -1,4 +1,4 @@
-const CACHE_NAME = "tradify-v64";
+const CACHE_NAME = "v65";
 const APP_STATIC_RESOURCES = [
    "./assets/aho-corasick/aho-corasick.js",
    "./assets/als-wave-parser/wav-parser.js",
@@ -62,6 +62,7 @@ self.addEventListener("activate", (activateEvent) => {
                   console.log("   Old cache '" + name + "' will be updated with new cache '" + CACHE_NAME + "'.");
                   return caches.delete(name);
                }
+               console.log("   Cache version is: " + CACHE_NAME);
                return undefined;
             }),
          );
@@ -90,6 +91,3 @@ self.addEventListener("fetch", fetchEvent => {
       })() 
    );
 });
-
-document.getElementById("version").innerText = "Version " + CACHE_NAME;
-
