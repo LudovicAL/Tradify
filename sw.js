@@ -92,3 +92,4 @@ self.addEventListener("fetch", fetchEvent => {
 });
 
 document.getElementById("version").innerText = "Version " + CACHE_NAME;
+
