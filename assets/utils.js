@@ -53,7 +53,7 @@ function drawArrayOfArraysOnCanvas(canvasName, arrayOfArrays, width, height) {
  * @param {int} widthMagnification A number by which to magnify the data on the X axis.
  */
 function drawArrayOnCanvas(canvasName, dataArray, widthMagnification) {
-   let heightMagnification = 2;
+   let heightMagnification = 60;
    //Prepare the canvas
    let maxValue = Math.max(...dataArray);
    let canvasElement = document.getElementById(canvasName);

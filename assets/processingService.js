@@ -44,7 +44,7 @@ function computeWindowFrame(audioSampleArray, sampleRate) {
    console.log("   Started: Window frame computing");
    let blackmanWindow = getBlackmanWindow();
    if (DEBUG_MODE) {
-      drawArrayOnCanvas("blackmanWindowCanvas", blackmanWindow, 2);
+      drawArrayOnCanvas("blackmanWindowCanvas", blackmanWindow, 1);
    }
    let windowFrameArray = [];
    for (let audioSample of audioSampleArray) {
